@@ -39,13 +39,13 @@
 				<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
 					<img src="<?= base_url('img/photos/user_logo.png') ?>" class="avatar img-fluid rounded-circle me-1" alt="Admin" /> <span class="text-dark">Admin</span>
 				</a>
-				<!-- Jika userRole adalah (Staf Gudang) -->
-			  	<?php elseif ($userRole['role'] == 'Staf Gudang') : ?>
+				<!-- Jika userRole adalah (Gudang Bagian) -->
+			  	<?php elseif ($userRole['role'] == 'Gudang Bagian') : ?>
 				<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
 					<img src="<?= base_url('img/photos/user_logo.png') ?>" class="avatar img-fluid rounded-circle me-1" alt="Karyawan" /> <span class="text-dark">Kepala Gudang Bagian</span>
 				</a>
-				<!-- Jika userRole adalah (Manajer) -->
-				<?php elseif ($userRole['role'] == 'Manajer') : ?>
+				<!-- Jika userRole adalah (Gudang Pusat) -->
+				<?php elseif ($userRole['role'] == 'Gudang Pusat') : ?>
 				<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
 					<img src="<?= base_url('img/photos/user_logo.png') ?>" class="avatar img-fluid rounded-circle me-1" alt="Assigner" /> <span class="text-dark">Kepala Gudang Pusat</span>
 				</a>

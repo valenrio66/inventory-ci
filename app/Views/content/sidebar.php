@@ -119,7 +119,13 @@
 
                         <li class="sidebar-item <?= isActive('nilai_pemeriksaan', $currentPage) ?>">
                             <a class="sidebar-link" href="<?= base_url('/dashboard/karyawan/nilai_pemeriksaan') ?>">
-                                <i class="align-middle" data-feather="list"></i> <span class="align-middle">Nilai Pemeriksaan</span>
+                                <i class="align-middle" data-feather="list"></i> <span class="align-middle">Rekap Pengiriman</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item <?= isActive('nilai_pemeriksaan', $currentPage) ?>">
+                            <a class="sidebar-link" href="<?= base_url('/dashboard/karyawan/nilai_pemeriksaan') ?>">
+                                <i class="align-middle" data-feather="list"></i> <span class="align-middle">Rekap Pengeluaran</span>
                             </a>
                         </li>
 
@@ -137,7 +143,13 @@
 
                         <li class="sidebar-item <?= isActive('nilai_pemeriksaan', $currentPage) ?>">
                             <a class="sidebar-link" href="<?= base_url('/dashboard/assign/nilai_pemeriksaan') ?>">
-                                <i class="align-middle" data-feather="list"></i> <span class="align-middle">Nilai Key Result</span>
+                                <i class="align-middle" data-feather="list"></i> <span class="align-middle">Rekap Pengiriman</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item <?= isActive('nilai_pemeriksaan', $currentPage) ?>">
+                            <a class="sidebar-link" href="<?= base_url('/dashboard/assign/nilai_pemeriksaan') ?>">
+                                <i class="align-middle" data-feather="list"></i> <span class="align-middle">Rekap Pengeluaran</span>
                             </a>
                         </li>
                     <?php endif; ?>

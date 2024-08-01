@@ -23,3 +23,12 @@ $routes->post('/user/create', 'User::createUser', ['filter' => 'auth']);
 $routes->get('/dashboard/user/update/(:segment)', 'User::renderPageUpdateUser/$1', ['filter' => 'auth']);
 $routes->post('user/update/(:segment)', 'User::updateUser/$1', ['filter' => 'auth']);
 $routes->get('/user/delete/(:num)', 'User::deleteUser/$1', ['filter' => 'auth']);
+
+// Gudang
+$routes->get('/dashboard/gudang', 'Gudang::getAllGudang', ['filter' => 'auth']);
+
+// Rak
+$routes->get('/dashboard/rak', 'Rak::getAllRak', ['filter' => 'auth']);
+
+// Barang
+$routes->get('/dashboard/barang', 'Barang::getAllBarang', ['filter' => 'auth']);
