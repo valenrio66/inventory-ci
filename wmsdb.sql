@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 07, 2024 at 11:08 AM
+-- Generation Time: Aug 01, 2024 at 11:09 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -30,9 +30,18 @@ SET time_zone = "+00:00";
 CREATE TABLE `gudang` (
   `id_gudang` varchar(10) NOT NULL,
   `nama_gudang` varchar(30) NOT NULL,
+  `id_kepala` int(11) NOT NULL,
+  `level` enum('Bagian','Pusat','','') NOT NULL,
   `alamat` varchar(255) NOT NULL,
-  `kapasitas` int(20) NOT NULL
+  `no_hp` varchar(13) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `gudang`
+--
+
+INSERT INTO `gudang` (`id_gudang`, `nama_gudang`, `id_kepala`, `level`, `alamat`, `no_hp`) VALUES
+('1', 'Gudang A', 1, 'Bagian', 'Pelabuhan Merak', '085213921335');
 
 -- --------------------------------------------------------
 
@@ -79,6 +88,26 @@ CREATE TABLE `produk` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `rak`
+--
+
+CREATE TABLE `rak` (
+  `id` int(11) NOT NULL,
+  `nomor_rak` int(11) NOT NULL,
+  `id_gudang` int(11) NOT NULL,
+  `kapasitas` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `rak`
+--
+
+INSERT INTO `rak` (`id`, `nomor_rak`, `id_gudang`, `kapasitas`) VALUES
+(1, 1, 1, 100);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `stok`
 --
 
@@ -113,7 +142,7 @@ CREATE TABLE `user` (
   `username` varchar(20) NOT NULL,
   `password` varchar(255) NOT NULL,
   `nama` varchar(50) NOT NULL,
-  `role` enum('Admin','Staff Gudang','Manajer') NOT NULL,
+  `role` enum('Admin','Gudang Bagian','Gudang Pusat') NOT NULL,
   `email` varchar(30) NOT NULL,
   `no_hp` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -123,7 +152,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `username`, `password`, `nama`, `role`, `email`, `no_hp`) VALUES
-(3, 'valenrionald', '$2y$10$D/phgqMcTSEIoeyiX6V2memFuoYWx5O6fip0Kk9qR3eCOss1JhTRO', 'Valen Rionald', 'Admin', 'valenrio@ulbi.ac.id', '0895748974521');
+(3, 'valenrionald', '$2y$10$D/phgqMcTSEIoeyiX6V2memFuoYWx5O6fip0Kk9qR3eCOss1JhTRO', 'Valen Rionald', 'Admin', 'valenrio@ulbi.ac.id', '0895748974521'),
+(4, 'adminadmin1', '$2y$10$DdjjuoBb9WNrbou1D9HpfetMO.LWE96RqFu0NBGpjbmQ8hiKXAeoi', 'Admin', 'Admin', 'admin@gmail.com', '085213921331'),
+(5, 'ejaeja1', '$2y$10$MAo529EzAVp0Ke9UTR2USuZK2UWXli7EiGS/FBxv2PwfMz0gTJdGa', 'Eja', 'Gudang Bagian', 'eja@gmail.com', '085213921333'),
+(6, 'rezareza1', '$2y$10$6Hd4CEGE66PKXKtdZr/tjezvHRjp43nJn/Q4pBIInooCFEndA1Cii', 'Reza', 'Gudang Pusat', 'reza@gmail.com', '085213921334');
 
 --
 -- Indexes for dumped tables
@@ -157,6 +189,12 @@ ALTER TABLE `produk`
   ADD PRIMARY KEY (`id_produk`);
 
 --
+-- Indexes for table `rak`
+--
+ALTER TABLE `rak`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `stok`
 --
 ALTER TABLE `stok`
@@ -181,10 +219,16 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `rak`
+--
+ALTER TABLE `rak`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
