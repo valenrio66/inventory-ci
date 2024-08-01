@@ -12,27 +12,11 @@ class UserModel extends Model
 	protected $beforeInsert = ['beforeInsert'];
 	protected $beforeUpdate = ['beforeUpdate'];
 
-	protected function beforeInsert(array $data)
-	{
-		$data = $this->passwordHash($data);
-		return $data;
-	}
-
-	protected function beforeUpdate(array $data)
-	{
-		$data = $this->passwordHash($data);
-		return $data;
-	}
-
-	protected function passwordHash(array $data)
-	{
-		if (isset($data['data']['password'])) {
-			$data['data']['password'] = password_hash($data['data']['password'], PASSWORD_DEFAULT);
-			// Debug statement
-			log_message('debug', 'Password hashed: ' . $data['data']['password']);
-		}
-		return $data;
-	}
+	// Untuk Get User by ID
+    public function getUserById($id)
+    {
+        return $this->find($id);
+    }
 
 	// Untuk Create User
 	public function createUser($data)
@@ -40,6 +24,18 @@ class UserModel extends Model
 		$data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 		return $this->insert($data);
 	}
+
+    // Untuk Update Data
+    public function updateUser($id, $data)
+    {
+        return $this->update($id, $data);
+    }
+
+    // Untuk Delete Data
+    public function deleteUser($id)
+    {
+        return $this->delete($id);
+    }
 
 	public function logout()
 	{

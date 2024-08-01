@@ -5,53 +5,15 @@ use App\Models\UserModel;
 
 class User extends BaseController
 {
-	public function login(): string
-	{
-		// Untuk menampilkan view form registrasi
-		return view('user/login');
-	}
-
-	public function attemptLogin()
+	// Get All User
+	public function getAllUser(): string
 	{
 		$userModel = new UserModel();
-		$username = $this->request->getVar('username');
-		$password = $this->request->getVar('password');
+		$data['users'] = $userModel->findAll();
 
-		// Debug statement
-		log_message('debug', 'Attempting login for username: ' . $username);
-
-		$user = $userModel->where('username', $username)->first();
-
-		if ($user) {
-			$pass = $user['password'];
-
-			// Debug statement
-			log_message('debug', 'Hashed password from database: ' . $pass);
-
-			$authenticatePassword = password_verify($password, $pass);
-
-			// Debug statement
-			log_message('debug', 'Password verification result: ' . ($authenticatePassword ? 'true' : 'false'));
-
-			if ($authenticatePassword) {
-				$ses_data = [
-					'user_id' => $user['id_user'],
-					'user_name' => $user['username'],
-					'logged_in' => TRUE
-				];
-				session()->set($ses_data);
-				session()->setFlashdata('success', 'Berhasil Login');
-				return redirect()->to('/dashboard'); // Kembali ke halaman login dan tampilkan Sweet Alert
-			} else {
-				session()->setFlashdata('msg', 'Password salah');
-				return redirect()->to('/login');
-			}
-		} else {
-			session()->setFlashdata('msg', 'Username tidak ditemukan');
-			return redirect()->to('/login');
-		}
+		return view('admin/user_view', $data);
 	}
-
+	
 	// Function for Create User
 	public function renderPageCreateUser(): string
 	{
@@ -73,10 +35,5 @@ class User extends BaseController
 		}
 	}
 
-	public function logout()
-	{
-		session()->destroy();
-		return redirect()->to('/login');
-	}
 }
 ?>
