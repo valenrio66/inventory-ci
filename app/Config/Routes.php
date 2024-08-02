@@ -30,5 +30,10 @@ $routes->get('/dashboard/gudang', 'Gudang::getAllGudang', ['filter' => 'auth']);
 // Rak
 $routes->get('/dashboard/rak', 'Rak::getAllRak', ['filter' => 'auth']);
 
+// Box
+$routes->get('/dashboard/box', 'Box::getAllBox', ['filter' => 'auth']);
+
 // Barang
 $routes->get('/dashboard/barang', 'Barang::getAllBarang', ['filter' => 'auth']);
+$routes->get('/dashboard/barang/add', 'Barang::renderPageAddBarang', ['filter' => 'auth']);
+$routes->post('/barang/add', 'Barang::addBarang', ['filter' => 'auth']);

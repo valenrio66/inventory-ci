@@ -81,6 +81,37 @@
                             Submenu Admin
                         </li>
 
+						<li class="sidebar-item <?= isActive('gudang', $currentPage) ?>">
+                            <a class="sidebar-link" href="<?= base_url('/dashboard/gudang') ?>">
+                                <i class="align-middle" data-feather="list"></i> <span class="align-middle">List Gudang</span>
+                            </a>
+                        </li>
+
+						<li class="sidebar-item <?= isActive('rak', $currentPage) ?>">
+                            <a class="sidebar-link" href="<?= base_url('/dashboard/rak') ?>">
+                                <i class="align-middle" data-feather="list"></i> <span class="align-middle">List Rak</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item <?= isActive('box', $currentPage) ?>">
+                            <a class="sidebar-link" href="<?= base_url('/dashboard/box') ?>">
+                                <i class="align-middle" data-feather="list"></i> <span class="align-middle">List Box</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item <?= isActive('barang', $currentPage) ?>">
+                            <a class="sidebar-link" href="<?= base_url('/dashboard/barang') ?>">
+                                <i class="align-middle" data-feather="list"></i> <span class="align-middle">List Barang</span>
+                            </a>
+                        </li>
+
+                        <!-- Tambahkan item sidebar khusus admin di sini sesuai kebutuhan -->
+                    
+                        <?php elseif ($userRole['role'] == 'Super Admin') : ?>
+                            <li class="sidebar-header">
+                            Submenu Super Admin
+                        </li>
+
                         <li class="sidebar-item <?= isActive('user', $currentPage) ?>">
                             <a class="sidebar-link" href="<?= base_url('/dashboard/user') ?>">
                                 <i class="align-middle" data-feather="user"></i> <span class="align-middle">User</span>
@@ -99,14 +130,21 @@
                             </a>
                         </li>
 
+                        <li class="sidebar-item <?= isActive('box', $currentPage) ?>">
+                            <a class="sidebar-link" href="<?= base_url('/dashboard/box') ?>">
+                                <i class="align-middle" data-feather="list"></i> <span class="align-middle">List Box</span>
+                            </a>
+                        </li>
+
                         <li class="sidebar-item <?= isActive('barang', $currentPage) ?>">
                             <a class="sidebar-link" href="<?= base_url('/dashboard/barang') ?>">
                                 <i class="align-middle" data-feather="list"></i> <span class="align-middle">List Barang</span>
                             </a>
                         </li>
 
-                        <!-- Tambahkan item sidebar khusus admin di sini sesuai kebutuhan -->
-                    <?php elseif ($userRole['role'] == 'Gudang Bagian') : ?>
+                        <!-- Tambahkan item sidebar khusus pasien di sini sesuai kebutuhan -->
+
+                        <?php elseif ($userRole['role'] == 'Gudang Bagian') : ?>
                         <li class="sidebar-header">
                             Submenu Kepala Gudang Bagian
                         </li>

@@ -11,7 +11,7 @@
 						<h1 class="h2">Selamat Datang!</h1>
                         <img src="<?= base_url('img/icon_gudang.png') ?>" style="max-width: 100px; max-height: 100px; margin-bottom: 10px;">
 						<p class="lead">
-							Sistem Manajemen Karyawan Pos
+							Sistem Pergudangan <b>(LOGIWARE)</b>
 						</p>
 					</div>
 

@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Tangkap formulir
-    const form = document.querySelector('#addUser');
+    const form = document.querySelector('#addBarang');
 
     // Tambahkan event listener untuk event submit
     form.addEventListener('submit', function(event) {

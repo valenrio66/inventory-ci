@@ -35,7 +35,9 @@
                                             <th hidden></th>
                                             <th>Nomor Rak</th>
                                             <th>Gudang</th>
-                                            <th>Kapasitas</th>
+                                            <th>Kapasitas Fast</th>
+                                            <th>Kapasitas Medium</th>
+                                            <th>Kapasitas Slow</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -49,10 +51,16 @@
                                                     <?= $rak['nomor_rak'] ?>
                                                 </td>
                                                 <td>
-                                                    <?= $rak['id_gudang'] ?>
+                                                    <?= $rak['nama_gudang'] ?>
                                                 </td>
                                                 <td>
-                                                    <?= $rak['kapasitas'] ?>
+                                                    <?= $rak['kapasitas_fast'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $rak['kapasitas_medium'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $rak['kapasitas_slow'] ?>
                                                 </td>
                                                 <td>
                                                     <a href="<?= base_url('/dashboard/rak/detail/' . $rak['id']) ?>" class="btn btn-info">Detail</a>

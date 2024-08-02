@@ -39,6 +39,11 @@
 				<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
 					<img src="<?= base_url('img/photos/user_logo.png') ?>" class="avatar img-fluid rounded-circle me-1" alt="Admin" /> <span class="text-dark">Admin</span>
 				</a>
+				<!-- Jika userRole adalah (Super Admin) -->
+				<?php elseif ($userRole['role'] == 'Super Admin') : ?>
+				<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+					<img src="<?= base_url('img/photos/user_logo.png') ?>" class="avatar img-fluid rounded-circle me-1" alt="Karyawan" /> <span class="text-dark">Super Admin</span>
+				</a>
 				<!-- Jika userRole adalah (Gudang Bagian) -->
 			  	<?php elseif ($userRole['role'] == 'Gudang Bagian') : ?>
 				<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
