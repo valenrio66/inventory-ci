@@ -134,7 +134,7 @@
                                         type="number"
                                         class="form-control"
                                         id="panjang" name="panjang"
-                                        placeholder="Masukkan Panjang Barang (cm)"
+                                        placeholder="Masukkan Panjang Barang (m)"
                                         required/>
                                     </div>
                                     <div class="col-md-4">
@@ -143,7 +143,7 @@
                                         type="number"
                                         class="form-control"
                                         id="lebar" name="lebar"
-                                        placeholder="Masukkan Lebar Barang (cm)"
+                                        placeholder="Masukkan Lebar Barang (m)"
                                         required/>
                                     </div>
                                     <div class="col-md-4">
@@ -151,7 +151,7 @@
                                         type="number"
                                         class="form-control"
                                         id="tinggi" name="tinggi"
-                                        placeholder="Masukkan Tinggi Barang (cm)"
+                                        placeholder="Masukkan Tinggi Barang (m)"
                                         required/>
                                     </div>
                                 </div>

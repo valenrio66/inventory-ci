@@ -51,7 +51,7 @@
                                                     <?= $gudang['nama_gudang'] ?>
                                                 </td>
                                                 <td>
-                                                    <?= $gudang['id_kepala'] ?>
+                                                    <?= $gudang['nama'] ?>
                                                 </td>
                                                 <td>
                                                     <?= $gudang['level'] ?>

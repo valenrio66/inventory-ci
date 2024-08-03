@@ -26,12 +26,16 @@ $routes->get('/user/delete/(:num)', 'User::deleteUser/$1', ['filter' => 'auth'])
 
 // Gudang
 $routes->get('/dashboard/gudang', 'Gudang::getAllGudang', ['filter' => 'auth']);
+$routes->get('/dashboard/gudang/add', 'Gudang::renderPageAddGudang', ['filter' => 'auth']);
+$routes->post('/gudang/add', 'Gudang::addGudang', ['filter' => 'auth']);
 
 // Rak
 $routes->get('/dashboard/rak', 'Rak::getAllRak', ['filter' => 'auth']);
+$routes->get('/dashboard/rak/add', 'Rak::renderPageAddRak', ['filter' => 'auth']);
 
 // Box
 $routes->get('/dashboard/box', 'Box::getAllBox', ['filter' => 'auth']);
+$routes->get('/dashboard/box/add', 'Box::renderPageAddBox', ['filter' => 'auth']);
 
 // Barang
 $routes->get('/dashboard/barang', 'Barang::getAllBarang', ['filter' => 'auth']);

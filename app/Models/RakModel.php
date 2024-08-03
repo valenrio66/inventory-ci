@@ -10,6 +10,7 @@ class RakModel extends Model
     protected $primaryKey = 'id';
     protected $allowedFields = ['nomor_rak', 'id_gudang', 'kapasitas_fast', 'kapasitas_medium', 'kapasitas_slow'];
 
+    // Get All Rak
     public function getRakWithGudang()
     {
         return $this->select('rak.*, gudang.nama_gudang')
@@ -17,6 +18,7 @@ class RakModel extends Model
             ->findAll();
     }
 
+    // Update Capacity Rak
     public function updateCapacity($id_rak, $dimensi_barang, $tipe_box) {
         $rak = $this->find($id_rak);
         if ($tipe_box == 'Fast Moving') {

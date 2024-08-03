@@ -18,6 +18,21 @@ class BoxModel extends Model
             ->findAll();
     }
 
+    // Untuk Get Jenis Level Box
+    public function getLevelBoxValues()
+    {
+        $query = $this->db->query("SHOW COLUMNS FROM box WHERE Field = 'tipe_box'");
+        $row = $query->getRow();
+        if ($row === null) {
+            return [];
+        }
+
+        $regex = "/^enum\((.*)\)$/";
+        preg_match($regex, $row->Type, $matches);
+        $enum = str_replace("'", "", $matches[1]);
+        return explode(",", $enum);
+    }
+
     // Untuk Update Kapasitas Box
     public function updateCapacity($id_box, $dimensi_barang) {
         $box = $this->find($id_box);
