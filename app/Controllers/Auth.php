@@ -56,6 +56,7 @@ class Auth extends BaseController
 					'value'  => json_encode([
 						'id_user' => $user['id_user'],
 						'username' => $user['username'],
+						'role' => $user['role'],
 					]),
 					'expire' => '3600',
 					'secure' => true,
@@ -67,6 +68,7 @@ class Auth extends BaseController
 				$ses_data = [
 					'id_user' => $user['id_user'],
 					'username' => $user['username'],
+					'role' => $user['role'],
 					'logged_in' => TRUE
 				];
 				$session->set($ses_data);

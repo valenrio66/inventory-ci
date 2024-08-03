@@ -31,4 +31,9 @@ class AuthModel extends Model
         }
         return $data;
     }
+
+	public function getUserByUsername($username)
+	{
+		return $this->where('username', $username)->first();
+	}
 }

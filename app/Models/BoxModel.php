@@ -71,6 +71,17 @@ class BoxModel extends Model
 	//     return $this->update($id, $data);
 	// }
 
+	// Reduce Capacity when Sending Package
+	public function reduceCapacity($id_box, $jumlah)
+	{
+		$box = $this->find($id_box);
+		if ($box) {
+			$kapasitas_terpakai = $box['kapasitas_terpakai'] - $jumlah;
+			return $this->update($id_box, ['kapasitas_terpakai' => $kapasitas_terpakai]);
+		}
+		return false;
+	}
+
 	public function deleteBoxModel($id)
 	{
 		return $this->delete($id);

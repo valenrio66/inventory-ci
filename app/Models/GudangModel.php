@@ -54,6 +54,17 @@ class GudangModel extends Model
 	//     return $this->update($id, $data);
 	// }
 
+	// Reduce Capacity when Sending Package
+	public function reduceCapacity($id_gudang, $jumlah)
+	{
+		$gudang = $this->find($id_gudang);
+		if ($gudang) {
+			$kapasitas = $gudang['kapasitas'] - $jumlah;
+			return $this->update($id_gudang, ['kapasitas' => $kapasitas]);
+		}
+		return false;
+	}
+
 	public function deleteGudangModel($id)
 	{
 		return $this->delete($id);

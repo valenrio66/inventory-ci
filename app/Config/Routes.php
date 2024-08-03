@@ -49,3 +49,8 @@ $routes->get('/box/delete/(:segment)', 'Box::deleteBox/$1', ['filter' => 'auth']
 $routes->get('/dashboard/barang', 'Barang::getAllBarang', ['filter' => 'auth']);
 $routes->get('/dashboard/barang/add', 'Barang::renderPageAddBarang', ['filter' => 'auth']);
 $routes->post('/barang/add', 'Barang::addBarang', ['filter' => 'auth']);
+
+// Pengiriman Barang
+$routes->get('/dashboard/pengirimanbarang', 'PengirimanBarang::index', ['filter' => 'auth']);
+$routes->post('/dashboard/pengirimanbarang/add', 'PengirimanBarang::create', ['filter' => 'auth']);
+$routes->match(['GET', 'POST'], '/dashboard/pengirimanbarang/add', 'PengirimanBarang::create');

@@ -56,6 +56,20 @@ class RakModel extends Model
 	//     return $this->update($id, $data);
 	// }
 
+	// Reduce Capacity when Sending Package
+	public function reduceCapacity($id_rak, $tipe_box, $jumlah)
+	{
+		$rak = $this->find($id_rak);
+		if ($rak) {
+			$field = 'kapasitas_' . strtolower($tipe_box);
+			$kapasitas = $rak[$field] - $jumlah;
+			return $this->update($id_rak,
+				[$field => $kapasitas]
+			);
+		}
+		return false;
+	}
+
 	public function deleteRakModel($id)
 	{
 		return $this->delete($id);
