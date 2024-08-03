@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2024 at 08:58 AM
+-- Generation Time: Aug 03, 2024 at 09:49 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `box` (
-  `id_box` int(11) NOT NULL,
+  `id_box` varchar(11) NOT NULL,
   `id_rak` int(11) NOT NULL,
   `tipe_box` enum('Fast Moving','Medium Moving','Slow Moving','') NOT NULL,
   `kapasitas_tersedia` int(11) NOT NULL,
@@ -41,7 +41,10 @@ CREATE TABLE `box` (
 --
 
 INSERT INTO `box` (`id_box`, `id_rak`, `tipe_box`, `kapasitas_tersedia`, `kapasitas_terpakai`, `created_at`) VALUES
-(313, 3, 'Fast Moving', -5042, 5200, '2024-08-03 06:55:51');
+('21FM1', 21, 'Fast Moving', 56027, 750, '2024-08-03 11:13:03'),
+('21FM2', 21, 'Fast Moving', 56777, 0, '2024-08-03 11:19:44'),
+('21MM1', 21, 'Medium Moving', 56777, 0, '2024-08-03 11:19:22'),
+('21SM1', 21, 'Slow Moving', 56777, 0, '2024-08-03 11:19:33');
 
 -- --------------------------------------------------------
 
@@ -64,8 +67,29 @@ CREATE TABLE `gudang` (
 --
 
 INSERT INTO `gudang` (`id_gudang`, `nama_gudang`, `id_kepala`, `level`, `alamat`, `no_hp`, `kapasitas`) VALUES
-(2, 'Gudang Pusat', 6, 'Pusat', 'Gudang Pusat', '085269696969', 94800),
-(3, 'Gudang Bakauheni', 5, 'Bagian', 'Kabupaten Bakauheni', '08521345678', 6);
+(2, 'Gudang Pusat', 6, 'Pusat', 'Gudang Pusat', '085269696969', 94050),
+(3, 'Gudang Bakauheni', 5, 'Bagian', 'Kabupaten Bakauheni', '08521345678', 119218);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pengiriman_barang`
+--
+
+CREATE TABLE `pengiriman_barang` (
+  `id_pengiriman` int(11) NOT NULL,
+  `id_produk` varchar(20) NOT NULL,
+  `jumlah` int(10) NOT NULL,
+  `tanggal_pengiriman` datetime NOT NULL,
+  `status` enum('Pending','Approved','Rejected') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pengiriman_barang`
+--
+
+INSERT INTO `pengiriman_barang` (`id_pengiriman`, `id_produk`, `jumlah`, `tanggal_pengiriman`, `status`) VALUES
+(1, 'D6DL1621FM11', 4, '2024-08-03 00:00:00', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -76,7 +100,7 @@ INSERT INTO `gudang` (`id_gudang`, `nama_gudang`, `id_kepala`, `level`, `alamat`
 CREATE TABLE `produk` (
   `id_produk` varchar(20) NOT NULL,
   `nama_produk` varchar(50) NOT NULL,
-  `id_box` int(10) NOT NULL,
+  `id_box` varchar(11) NOT NULL,
   `klasifikasi_material` enum('Fast Moving','Medium Moving','Slow Moving','') NOT NULL,
   `merk` varchar(50) NOT NULL,
   `jenis_tipe` varchar(20) NOT NULL,
@@ -96,7 +120,7 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`id_produk`, `nama_produk`, `id_box`, `klasifikasi_material`, `merk`, `jenis_tipe`, `serial_number`, `kode_material_sap`, `jumlah`, `satuan`, `harga_satuan`, `jumlah_harga`, `nomor_urut_gudang`, `dimensi_barang`, `created_at`) VALUES
-('D6DL1611', 'Sparepart Mobil', 313, 'Fast Moving', 'Daihatsu', '6DL16', 'E160300080A', '2000007745', 13, 'PC', 18700, 243100, 11, 5200, '2024-08-02 18:20:00');
+('D6DL1621FM11', 'Sparepart Mobil', '21FM1', 'Fast Moving', 'Daihatsu', '6DL16', 'E2024', '22024', 2, 'PC', 6000, 36000, 21, 750, '2024-08-03 19:23:03');
 
 -- --------------------------------------------------------
 
@@ -106,7 +130,6 @@ INSERT INTO `produk` (`id_produk`, `nama_produk`, `id_box`, `klasifikasi_materia
 
 CREATE TABLE `rak` (
   `id` int(11) NOT NULL,
-  `nomor_rak` int(11) NOT NULL,
   `id_gudang` int(10) NOT NULL,
   `kapasitas_fast` int(11) NOT NULL,
   `kapasitas_medium` int(11) NOT NULL,
@@ -118,8 +141,9 @@ CREATE TABLE `rak` (
 -- Dumping data for table `rak`
 --
 
-INSERT INTO `rak` (`id`, `nomor_rak`, `id_gudang`, `kapasitas_fast`, `kapasitas_medium`, `kapasitas_slow`, `created_at`) VALUES
-(3, 101, 2, -4200, 1000, 1000, '2024-08-03 06:56:08');
+INSERT INTO `rak` (`id`, `id_gudang`, `kapasitas_fast`, `kapasitas_medium`, `kapasitas_slow`, `created_at`) VALUES
+(21, 2, 737345, 738095, 738095, '2024-08-03 11:05:25'),
+(22, 2, 681318, 681318, 681318, '2024-08-03 11:25:53');
 
 -- --------------------------------------------------------
 
@@ -179,6 +203,12 @@ ALTER TABLE `gudang`
   ADD KEY `id_kepala` (`id_kepala`);
 
 --
+-- Indexes for table `pengiriman_barang`
+--
+ALTER TABLE `pengiriman_barang`
+  ADD PRIMARY KEY (`id_pengiriman`);
+
+--
 -- Indexes for table `produk`
 --
 ALTER TABLE `produk`
@@ -209,22 +239,16 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT for table `box`
---
-ALTER TABLE `box`
-  MODIFY `id_box` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=314;
-
---
 -- AUTO_INCREMENT for table `gudang`
 --
 ALTER TABLE `gudang`
-  MODIFY `id_gudang` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_gudang` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `rak`
+-- AUTO_INCREMENT for table `pengiriman_barang`
 --
-ALTER TABLE `rak`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `pengiriman_barang`
+  MODIFY `id_pengiriman` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user`
