@@ -48,11 +48,11 @@ class Barang extends BaseController
 		$lastProduct = $barangModel->getLastProductInBox($id_box);
 		$productCountInBox = isset($lastProduct['urutan']) ? $lastProduct['urutan'] + 1 : 1;
 		
+		// Untuk membuat kode unik Barang/Produk
 		$id_produk = strtoupper(substr($merk, 0, 1)) 
 					. strtoupper(substr($jenis_tipe, 0, 5)) 
 					. $id_box 
 					. $productCountInBox;
-		
 		$nomor_urut_gudang = $id_box . $productCountInBox;
 
 		// Update capacities

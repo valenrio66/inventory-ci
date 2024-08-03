@@ -1,6 +1,7 @@
-<?php 
+<?php
 
 namespace App\Controllers;
+
 use App\Models\GudangModel;
 use App\Models\UserModel;
 
@@ -20,11 +21,11 @@ class Gudang extends BaseController
 	{
 		$userModel = new UserModel();
 		$data['users'] = $userModel->findAll();
-		
+
 
 		$gudangModel = new GudangModel();
 		$data['level_options'] = $gudangModel->getLevelGudangValues();
-	
+
 		return view('admin/gudang_add', $data);
 	}
 
@@ -32,10 +33,10 @@ class Gudang extends BaseController
 	public function addGudang()
 	{
 		$gudangModel = new GudangModel();
-		
+
 		$rak = $this->request->getPost('kapasitas');
-		$dimensi_bin = 0.495 * 0.37 * 0.31;
-		$bin = 15 * $dimensi_bin;
+		$dimensi_bin = 49.5 * 37 * 31; // Angka-angka ini satuannya dalam Centimeter
+		$bin = 15 * $dimensi_bin; // Rata-rata bin/box dalam satu rak adalah 15
 		$kapasitas = $rak * $bin;
 		$data = [
 			'nama_gudang' => $this->request->getPost('nama_gudang'),
@@ -53,5 +54,25 @@ class Gudang extends BaseController
 		}
 	}
 
+	// Render Page Detail Gudang
+	public function renderPageDetailGudang($id): string
+	{
+		$gudangModel = new GudangModel();
+		$data['gudangs'] = $gudangModel->getGudangByIdWithKepala($id);
+
+		return view('admin/gudang_detail', $data);
+	}
+
+	// Delete Gudang
+	public function deleteGudang($id)
+	{
+		$gudangModel = new GudangModel();
+		if ($gudangModel->deleteGudangModel($id)) {
+			// Debugging message
+			return redirect()->to('/dashboard/gudang')->with('message', 'Gudang berhasil dihapus');
+		} else {
+			// Debugging message
+			return redirect()->back()->with('message', 'Gagal menghapus gudang');
+		}
+	}
 }
-?>

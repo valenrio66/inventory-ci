@@ -28,14 +28,22 @@ $routes->get('/user/delete/(:num)', 'User::deleteUser/$1', ['filter' => 'auth'])
 $routes->get('/dashboard/gudang', 'Gudang::getAllGudang', ['filter' => 'auth']);
 $routes->get('/dashboard/gudang/add', 'Gudang::renderPageAddGudang', ['filter' => 'auth']);
 $routes->post('/gudang/add', 'Gudang::addGudang', ['filter' => 'auth']);
+$routes->get('/dashboard/gudang/detail/(:segment)', 'Gudang::renderPageDetailGudang/$1', ['filter' => 'auth']);
+$routes->get('/gudang/delete/(:num)', 'Gudang::deleteGudang/$1', ['filter' => 'auth']);
 
 // Rak
 $routes->get('/dashboard/rak', 'Rak::getAllRak', ['filter' => 'auth']);
 $routes->get('/dashboard/rak/add', 'Rak::renderPageAddRak', ['filter' => 'auth']);
+$routes->post('/rak/add', 'Rak::addRak', ['filter' => 'auth']);
+$routes->get('/dashboard/rak/detail/(:segment)', 'Rak::renderPageDetailRak/$1', ['filter' => 'auth']);
+$routes->get('/rak/delete/(:num)', 'Rak::deleteRak/$1', ['filter' => 'auth']);
 
 // Box
 $routes->get('/dashboard/box', 'Box::getAllBox', ['filter' => 'auth']);
 $routes->get('/dashboard/box/add', 'Box::renderPageAddBox', ['filter' => 'auth']);
+$routes->post('/box/add', 'Box::addBox', ['filter' => 'auth']);
+$routes->get('/dashboard/box/detail/(:segment)', 'Box::renderPageDetailBox/$1', ['filter' => 'auth']);
+$routes->get('/box/delete/(:segment)', 'Box::deleteBox/$1', ['filter' => 'auth']);
 
 // Barang
 $routes->get('/dashboard/barang', 'Barang::getAllBarang', ['filter' => 'auth']);
