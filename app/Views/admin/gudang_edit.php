@@ -4,12 +4,12 @@
 			<main class="content">
                 <div class="container-fluid p-0">
                 <h5 class="right-aligned" style="float: right">
-                    <a href="#">Home</a> / <a href="#">Gudang</a> / Tambah Gudang
+                    <a href="#">Home</a> / <a href="#">Gudang</a> / Edit Gudang
                 </h5>
-                <h1 class="h3 mb-3"><b>Tambah Gudang</b></h1>
+                <h1 class="h3 mb-3"><b>Edit Gudang</b></h1>
                     <div class="row">
                         <div class="col-12">
-                        <form id="addGudang" action="<?= base_url('/gudang/add') ?>" method="post">
+                        <form id="updateGudang" action="<?= base_url('/gudang/update/' . $gudangs['id_gudang']) ?>" method="post">
                             <div class="card">
                             <div class="card-body">
                                 <!-- Inputan Nama Gudang -->
@@ -18,7 +18,7 @@
                                 type="text"
                                 class="form-control"
                                 id="nama_gudang" name="nama_gudang"
-                                placeholder="Masukkan Nama Gudang"
+                                value="<?= esc($gudangs['nama_gudang']) ?>"
                                 required/>
 
                                 <div class="row mt-1">
@@ -54,7 +54,7 @@
                                             type="text"
                                             class="form-control"
                                             id="no_hp" name="no_hp"
-                                            placeholder="Masukkan Nomor Handphone"
+                                            value="<?= esc($gudangs['no_hp']) ?>"
                                             required/>
                                     </div>
                                     <div class="col-md-6">
@@ -64,7 +64,7 @@
                                         type="number"
                                         class="form-control"
                                         id="kapasitas" name="kapasitas"
-                                        placeholder="Masukkan Kapasitas (Jumlah Rak)"
+                                        value="<?= esc($gudangs['kapasitas']) ?>"
                                         required/>
                                     </div>
                                 </div>
@@ -76,7 +76,7 @@
                                         type="text"
                                         class="form-control"
                                         id="alamat" name="alamat"
-                                        placeholder="Masukkan Alamat Gudang"
+                                        value="<?= esc($gudangs['alamat']) ?>"
                                         required/>
                                 </div>
 
@@ -109,4 +109,4 @@
             </main>
 
 <?= $this->include('content/footer') ?>
-<script src="<?= base_url('js/gudang/add.js') ?>"></script>
+<script src="<?= base_url('js/gudang/update.js') ?>"></script>

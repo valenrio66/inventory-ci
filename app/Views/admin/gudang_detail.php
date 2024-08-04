@@ -57,9 +57,9 @@
 								<a href="#" type="button" onclick="history.back()" class="btn btn-info">
 									Kembali
 								</a>
-								<button type="submit" class="btn btn-warning" id="submitButton">
+								<a href="<?= base_url('/dashboard/gudang/update/'. $gudangs['id_gudang']) ?>" class="btn btn-warning">
 									Edit
-								</button>
+								</a>
 							</div>
 						</div>
 					</div>
@@ -70,4 +70,3 @@
 </main>
 
 <?= $this->include('content/footer') ?>
-<script src="<?= base_url('js/gudang/add.js') ?>"></script>

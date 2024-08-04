@@ -65,6 +65,28 @@ class Rak extends BaseController
 		return view('admin/rak_detail', $data);
 	}
 
+	// Render Page Edit Rak
+	public function renderPageUpdateRak($id): string
+	{
+		$rakModel = new RakModel();
+		$data['raks'] = $rakModel->getRakByIdWithGudang($id);
+
+		return view('admin/rak_edit', $data);
+	}
+
+	// Update Rak 
+	public function updateRak($id)
+	{
+		$rakModel = new RakModel();
+		$data = $this->request->getPost();
+
+		if ($rakModel->updateRakModel($id, $data)) {
+			return redirect()->to('/dashboard/rak')->with('message', 'Rak berhasil diupdate');
+		} else {
+			return redirect()->back()->withInput()->with('errors', $gudangModel->errors());
+		}
+	}
+
 	// Delete Rak
 	public function deleteRak($id)
 	{

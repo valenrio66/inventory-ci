@@ -66,10 +66,11 @@ class BoxModel extends Model
 	//     return $this->insert($data);
 	// }
 
-	// public function updateRoleModel($id, $data)
-	// {
-	//     return $this->update($id, $data);
-	// }
+	// Untuk Update Box
+	public function updateBoxModel($id, $data)
+	{
+	    return $this->update($id, $data);
+	}
 
 	// Reduce Capacity when Sending Package
 	public function reduceCapacity($id_box, $jumlah)

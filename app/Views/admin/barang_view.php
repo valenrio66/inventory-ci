@@ -103,4 +103,4 @@
             </main>
 
 <?= $this->include('content/footer') ?>
-<script src="<?= base_url('js/user/delete.js') ?>"></script>
+<script src="<?= base_url('js/barang/delete.js') ?>"></script>

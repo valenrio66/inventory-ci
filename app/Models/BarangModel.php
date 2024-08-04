@@ -18,6 +18,15 @@ class BarangModel extends Model
             ->findAll();
     }
 
+    // Untuk Get By ID
+    public function getBarangWithBoxById($id)
+    {
+        return $this->select('produk.*, box.id_box')
+            ->join('box', 'box.id_box = produk.id_box')
+            ->where('id_produk', $id)
+            ->find($id);
+    }
+
     // Untuk Get Opsi Klasifikasi Material
     public function getKlasifikasiMaterialValues()
     {
@@ -54,10 +63,11 @@ class BarangModel extends Model
         return $this->where('id_box', $id_box)->orderBy('created_at', 'desc')->first();
     }
 
-    // public function updateRoleModel($id, $data)
-    // {
-    //     return $this->update($id, $data);
-    // }
+    // Untuk Update Barang
+    public function updateBarangModel($id, $data)
+    {
+        return $this->update($id, $data);
+    }
 
     // public function deleteRoleModel($id)
     // {

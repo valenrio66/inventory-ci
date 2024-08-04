@@ -13,7 +13,7 @@ function confirmDelete(event) {
         if (result.isConfirmed) {
             Swal.fire({
                 title: "Sukses!",
-                text: "Berhasil menghapus barang ini.",
+                text: "Berhasil menghapus box ini.",
                 icon: "success",
                 showConfirmButton: false,
                 timer: 1500
@@ -23,7 +23,7 @@ function confirmDelete(event) {
         } else {
             Swal.fire({
                 title: "Gagal!",
-                text: "Gagal menghapus barang ini.",
+                text: "Gagal menghapus box ini.",
                 icon: "error"
             })
         }

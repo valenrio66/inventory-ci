@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\UserModel;
+use App\Models\AuthModel;
 
 class User extends BaseController
 {
@@ -17,21 +18,49 @@ class User extends BaseController
 	// Function for Create User
 	public function renderPageCreateUser(): string
 	{
-		return view('user/user_create');
+		return view('admin/user_add');
 	}
 
+	// Function for Create User
 	public function createUser()
 	{
-		$userModel = new UserModel();
-		$data = $this->request->getPost();
-
-		// Debug statement
-		log_message('debug', 'User data before insert: ' . json_encode($data));
-
-		if ($userModel->save($data)) {
-			return redirect()->to('/dashboard')->with('message', 'User berhasil ditambahkan');
+		$authModel = new AuthModel();
+		$data = [
+			'username' => $this->request->getPost('username'),
+			'password' => $this->request->getPost('password'),
+			'nama' => $this->request->getPost('nama'),
+			'role' => $this->request->getPost('role'),
+			'email' => $this->request->getPost('email'),
+			'status' => $this->request->getPost('status'),
+			'no_hp' => $this->request->getPost('no_hp'),
+		];
+	
+		if ($authModel->insert($data)) {
+			return redirect()->to('/dashboard/user');
 		} else {
-			return redirect()->back()->withInput()->with('errors', $userModel->errors());
+			return redirect()->back()->withInput()->with('errors', $authModel->errors());
+		}
+	}
+
+	// Render Page Detail User
+	public function renderPageDetailUser($id): string
+    {
+        $userModel = new UserModel();
+		$data['users'] = $userModel->getUserById($id);
+		
+		return view('admin/user_detail', $data);
+    }
+
+	// Delete User
+	public function deleteUser($id)
+	{
+		$userModel = new UserModel();
+		if ($userModel->deleteUserModel($id)) {
+			// Debugging message
+			return redirect()->to('/dashboard/user')->with('message', 'User berhasil dihapus');
+		} else {
+			// Debugging message
+			return redirect()->back()->with('message', 'Gagal menghapus user');
 		}
 	}
 

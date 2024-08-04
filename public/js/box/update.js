@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Tangkap formulir
-    const form = document.querySelector('#updateBarang');
+    const form = document.querySelector('#updateBox');
 
     // Tambahkan event listener untuk event submit
     form.addEventListener('submit', function(event) {
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Tampilkan SweetAlert konfirmasi
         Swal.fire({
             title: 'Konfirmasi',
-            text: 'Apakah Anda yakin ingin mengubah barang ini?',
+            text: 'Apakah Anda yakin ingin mengubah box ini?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Ya',
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 form.submit();
                 Swal.fire({
                     title: 'Sukses!',
-                    text: 'Berhasil mengubah barang ini.',
+                    text: 'Berhasil mengubah box ini.',
                     icon: 'success',
                     showConfirmButton: false,
                     timer: 1500
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 Swal.fire({
                     title: 'Gagal!',
-                    text: 'Gagal mengubah barang ini.',
+                    text: 'Gagal mengubah box ini.',
                     icon: 'error'
                 })
             }

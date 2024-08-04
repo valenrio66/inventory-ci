@@ -1,3 +1,6 @@
+<?= $this->include('content/sidebar') ?>
+<?= $this->include('content/header') ?>
+
 <main class="content">
 	<div class="container-fluid p-0">
 		<h5 class="right-aligned" style="float: right">
@@ -6,7 +9,7 @@
 		<h1 class="h3 mb-3"><b>Tambah User</b></h1>
 		<div class="row">
 			<div class="col-12">
-				<form action="<?= base_url('user/create') ?>" method="post">
+				<form action="<?= base_url('/user/create') ?>" method="post">
 					<div class="card">
 						<div class="card-body">
 							<!-- Inputan Nama Lengkap -->
@@ -38,15 +41,24 @@
 									<select id="role" name="role" class="form-control">
 										<option selected>Pilih Role User</option>
 										<option value="Admin">Admin</option>
-										<option value="Staff Gudang">Staff Gudang</option>
-										<option value="Manajer">Manajer</option>
+										<option value="Gudang Bagian">Gudang Bagian</option>
+										<option value="Gudang Pusat">Gudang Pusat</option>
 									</select>
 								</div>
 							</div>
 
-							<!-- Inputan Nomor Handphone -->
-							<h5 class="card-title mt-2">Nomor Handphone</h5>
-							<input type="text" class="form-control" id="no_hp" name="no_hp" placeholder="Masukkan Nomor Handphone" required />
+                            <div class="row mt-1">
+								<div class="col-md-6">
+                                    <!-- Inputan Nomor Handphone -->
+                                    <h5 class="card-title mt-2">Nomor Handphone</h5>
+                                    <input type="text" class="form-control" id="no_hp" name="no_hp" placeholder="Masukkan Nomor Handphone" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- Inputan Status -->
+                                    <h5 class="card-title mt-2">Status</h5>
+                                    <input type="text" class="form-control" id="status" name="status" value="Tidak Ada Status" disabled />
+                                </div>
+                            </div> 
 
 							<!-- Button Submit -->
 							<div style="
@@ -55,7 +67,7 @@
                                     margin-top: 20px;
                                 ">
 								<a href="#" type="button" onclick="history.back()" class="btn btn-info">
-									Cancel
+									Kembali
 								</a>
 								<button type="submit" class="btn btn-primary" id="submitButton">
 									Simpan
@@ -68,3 +80,6 @@
 		</div>
 	</div>
 </main>
+
+<?= $this->include('content/footer') ?>
+<script src="<?= base_url('js/user/add.js') ?>"></script>

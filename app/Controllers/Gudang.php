@@ -63,6 +63,32 @@ class Gudang extends BaseController
 		return view('admin/gudang_detail', $data);
 	}
 
+	// Render Page Edit Gudang
+	public function renderPageUpdateGudang($id): string
+	{
+		$gudangModel = new GudangModel();
+		$data['gudangs'] = $gudangModel->getGudangByIdWithKepala($id);
+		$data['level_options'] = $gudangModel->getLevelGudangValues();
+
+		$userModel = new UserModel();
+		$data['users'] = $userModel->findAll();
+
+		return view('admin/gudang_edit', $data);
+	}
+
+	// Update Gudang
+	public function updateGudang($id)
+	{
+		$gudangModel = new GudangModel();
+		$data = $this->request->getPost();
+
+		if ($gudangModel->updateGudangModel($id, $data)) {
+			return redirect()->to('/dashboard/gudang')->with('message', 'Gudang berhasil diupdate');
+		} else {
+			return redirect()->back()->withInput()->with('errors', $gudangModel->errors());
+		}
+	}
+
 	// Delete Gudang
 	public function deleteGudang($id)
 	{

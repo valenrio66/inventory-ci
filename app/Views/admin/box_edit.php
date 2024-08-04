@@ -4,12 +4,12 @@
 <main class="content">
 	<div class="container-fluid p-0">
 		<h5 class="right-aligned" style="float: right">
-			<a href="#">Home</a> / <a href="#">Box</a> / Detail Box
+			<a href="#">Home</a> / <a href="#">Box</a> / Edit Box
 		</h5>
-		<h1 class="h3 mb-3"><b>Detail Box</b></h1>
+		<h1 class="h3 mb-3"><b>Edit Box</b></h1>
 		<div class="row">
 			<div class="col-12">
-				<form>
+				<form id="updateBox" action="<?= base_url('/box/update/' . $boxs['id_box']) ?>" method="post">
 					<div class="card">
 						<div class="card-body">
 							<div class="row mt-1">
@@ -34,12 +34,12 @@
 								<div class="col-md-4">
 									<h5 class="card-title mt-2">Kapasitas Tersedia</h5>
 									<!-- Inputan Kapasitas Tersedia -->
-									<input type="text" class="form-control" id="kapasitas_tersedia" name="kapasitas_tersedia" value="<?= esc($boxs['kapasitas_tersedia']) ?> cm³" disabled />
+									<input type="text" class="form-control" id="kapasitas_tersedia" name="kapasitas_tersedia" value="<?= esc($boxs['kapasitas_tersedia']) ?> cm³" />
 								</div>
 								<div class="col-md-4">
 									<!-- Inputan Kapasitas Terpakai -->
 									<h5 class="card-title mt-2">Kapasitas Terpakai</h5>
-									<input type="text" class="form-control" id="kapasitas_terpakai" name="kapasitas_terpakai" value="<?= esc($boxs['kapasitas_terpakai']) ?> cm³" disabled />
+									<input type="text" class="form-control" id="kapasitas_terpakai" name="kapasitas_terpakai" value="<?= esc($boxs['kapasitas_terpakai']) ?> cm³" />
 								</div>
 							</div>
 
@@ -50,11 +50,11 @@
                                     margin-top: 20px;
                                 ">
 								<a href="#" type="button" onclick="history.back()" class="btn btn-info">
-									Kembali
+									Cancel
 								</a>
-								<a href="<?= base_url('/dashboard/box/update/'. $boxs['id_box']) ?>" class="btn btn-primary">
-									Edit
-</a>
+								<button type="submit" class="btn btn-primary" id="submitButton">
+									Simpan
+								</button>
 							</div>
 						</div>
 					</div>
@@ -65,3 +65,4 @@
 </main>
 
 <?= $this->include('content/footer') ?>
+<script src="<?= base_url('js/box/update.js') ?>"></script>

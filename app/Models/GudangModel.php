@@ -49,10 +49,11 @@ class GudangModel extends Model
 		return explode(",", $enum);
 	}
 
-	// public function updateRoleModel($id, $data)
-	// {
-	//     return $this->update($id, $data);
-	// }
+	// Untuk update Gudang
+	public function updateGudangModel($id, $data)
+	{
+	    return $this->update($id, $data);
+	}
 
 	// Reduce Capacity when Sending Package
 	public function reduceCapacity($id_gudang, $jumlah)

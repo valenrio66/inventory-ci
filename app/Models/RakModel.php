@@ -70,6 +70,12 @@ class RakModel extends Model
 		return false;
 	}
 
+	// Untuk Update Rak
+	public function updateRakModel($id, $data)
+	{
+	    return $this->update($id, $data);
+	}
+
 	public function deleteRakModel($id)
 	{
 		return $this->delete($id);

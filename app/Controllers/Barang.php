@@ -17,6 +17,16 @@ class Barang extends BaseController
 		return view('admin/barang_view', $data);
 	}
 
+	// Get All Barang By Id
+	public function renderPageDetailBarang($id) : string 
+	{
+		$barangModel = new BarangModel();
+		$data['barangs'] = $barangModel->getBarangWithBoxById($id);
+
+		return view('admin/barang_detail', $data);
+	}
+
+	// Render Page Add Barang
 	public function renderPageAddBarang(): string
 	{
 		$barangModel = new BarangModel();
@@ -26,6 +36,15 @@ class Barang extends BaseController
 		$data['satuan_barang_options'] = $barangModel->getSatuanBarangValues();
 
 		return view('admin/barang_add', $data);
+	}
+
+	// Render Page Update Barang
+	public function renderPageUpdateBarang($id)
+	{
+		$barangModel = new BarangModel();
+		$data['barangs'] = $barangModel->getBarangWithBoxById($id);
+
+		return view('admin/barang_edit', $data);
 	}
 
 	// Fungsi Add Barang
@@ -79,6 +98,19 @@ class Barang extends BaseController
 
 		if ($barangModel->insert($data)) {
 			return redirect()->to('/dashboard/barang');
+		} else {
+			return redirect()->back()->withInput()->with('errors', $barangModel->errors());
+		}
+	}
+
+	// Update Barang
+	public function updateBarang($id)
+	{
+		$barangModel = new BarangModel();
+		$data = $this->request->getPost();
+
+		if ($barangModel->updateBarangModel($id, $data)) {
+			return redirect()->to('/dashboard/barang')->with('message', 'Barang berhasil diupdate');
 		} else {
 			return redirect()->back()->withInput()->with('errors', $barangModel->errors());
 		}

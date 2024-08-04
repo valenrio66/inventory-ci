@@ -77,6 +77,29 @@ class Box extends BaseController
 		return view('admin/box_detail', $data);
 	}
 
+	// Render Page Update Box
+	public function renderPageUpdateBox($id)
+	{
+		$boxModel = new BoxModel();
+		$data['boxs'] = $boxModel->getBoxWithRakAndGudang($id);
+
+		// Misalnya mengembalikan ke view
+		return view('admin/box_edit', $data);
+	}
+
+	// Update Box
+	public function updateBox($id)
+	{
+		$boxModel = new BoxModel();
+		$data = $this->request->getPost();
+
+		if ($boxModel->updateBoxModel($id, $data)) {
+			return redirect()->to('/dashboard/box')->with('message', 'Box berhasil diupdate');
+		} else {
+			return redirect()->back()->withInput()->with('errors', $boxModel->errors());
+		}
+	}
+
 	// Delete Box
 	public function deleteBox($id_box)
 	{
