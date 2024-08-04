@@ -14,7 +14,7 @@ class Barang extends BaseController
 		$barangModel = new BarangModel();
 		$data['barangs'] = $barangModel->getBarangWithBox();
 
-		return view('admin/barang_view', $data);
+		return view('barang/barang_view', $data);
 	}
 
 	// Get All Barang By Id
@@ -23,7 +23,7 @@ class Barang extends BaseController
 		$barangModel = new BarangModel();
 		$data['barangs'] = $barangModel->getBarangWithBoxById($id);
 
-		return view('admin/barang_detail', $data);
+		return view('barang/barang_detail', $data);
 	}
 
 	// Render Page Add Barang
@@ -35,7 +35,7 @@ class Barang extends BaseController
 		$data['klasifikasi_material_options'] = $barangModel->getKlasifikasiMaterialValues();
 		$data['satuan_barang_options'] = $barangModel->getSatuanBarangValues();
 
-		return view('admin/barang_add', $data);
+		return view('barang/barang_add', $data);
 	}
 
 	// Render Page Update Barang
@@ -44,7 +44,7 @@ class Barang extends BaseController
 		$barangModel = new BarangModel();
 		$data['barangs'] = $barangModel->getBarangWithBoxById($id);
 
-		return view('admin/barang_edit', $data);
+		return view('barang/barang_edit', $data);
 	}
 
 	// Fungsi Add Barang

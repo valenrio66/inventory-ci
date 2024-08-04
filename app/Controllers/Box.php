@@ -13,7 +13,7 @@ class Box extends BaseController
 		$boxModel = new BoxModel();
 		$data['boxs'] = $boxModel->getBoxWithRak();
 
-		return view('admin/box_view', $data);
+		return view('box/box_view', $data);
 	}
 
 	// Render Page Add Box
@@ -26,7 +26,7 @@ class Box extends BaseController
 		$boxModel = new BoxModel();
 		$data['tipe_box_options'] = $boxModel->getLevelBoxValues();
 
-		return view('admin/box_add', $data);
+		return view('box/box_add', $data);
 	}
 
 	// Create Box
@@ -74,7 +74,7 @@ class Box extends BaseController
 		$data['boxs'] = $boxModel->getBoxWithRakAndGudang($id);
 
 		// Misalnya mengembalikan ke view
-		return view('admin/box_detail', $data);
+		return view('box/box_detail', $data);
 	}
 
 	// Render Page Update Box
@@ -84,7 +84,7 @@ class Box extends BaseController
 		$data['boxs'] = $boxModel->getBoxWithRakAndGudang($id);
 
 		// Misalnya mengembalikan ke view
-		return view('admin/box_edit', $data);
+		return view('box/box_edit', $data);
 	}
 
 	// Update Box

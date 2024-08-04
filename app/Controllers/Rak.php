@@ -13,7 +13,7 @@ class Rak extends BaseController
 		$rakModel = new RakModel();
 		$data['raks'] = $rakModel->getRakWithGudang();
 
-		return view('admin/rak_view', $data);
+		return view('rak/rak_view', $data);
 	}
 
 	// Render Page Add Rak
@@ -22,7 +22,7 @@ class Rak extends BaseController
 		$gudangModel = new GudangModel();
 		$data['gudangs'] = $gudangModel->findAll();
 
-		return view('admin/rak_add', $data);
+		return view('rak/rak_add', $data);
 	}
 
 	// Create Rak
@@ -62,7 +62,7 @@ class Rak extends BaseController
 		$rakModel = new RakModel();
 		$data['raks'] = $rakModel->getRakByIdWithGudang($id);
 
-		return view('admin/rak_detail', $data);
+		return view('rak/rak_detail', $data);
 	}
 
 	// Render Page Edit Rak
@@ -71,7 +71,7 @@ class Rak extends BaseController
 		$rakModel = new RakModel();
 		$data['raks'] = $rakModel->getRakByIdWithGudang($id);
 
-		return view('admin/rak_edit', $data);
+		return view('rak/rak_edit', $data);
 	}
 
 	// Update Rak 

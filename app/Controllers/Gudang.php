@@ -13,7 +13,7 @@ class Gudang extends BaseController
 		$gudangModel = new GudangModel();
 		$data['gudangs'] = $gudangModel->getGudangWithKepala();
 
-		return view('admin/gudang_view', $data);
+		return view('gudang/gudang_view', $data);
 	}
 
 	// Render Page Add Gudang
@@ -26,7 +26,7 @@ class Gudang extends BaseController
 		$gudangModel = new GudangModel();
 		$data['level_options'] = $gudangModel->getLevelGudangValues();
 
-		return view('admin/gudang_add', $data);
+		return view('gudang/gudang_add', $data);
 	}
 
 	// Create Gudang
@@ -60,7 +60,7 @@ class Gudang extends BaseController
 		$gudangModel = new GudangModel();
 		$data['gudangs'] = $gudangModel->getGudangByIdWithKepala($id);
 
-		return view('admin/gudang_detail', $data);
+		return view('gudang/gudang_detail', $data);
 	}
 
 	// Render Page Edit Gudang
@@ -73,7 +73,7 @@ class Gudang extends BaseController
 		$userModel = new UserModel();
 		$data['users'] = $userModel->findAll();
 
-		return view('admin/gudang_edit', $data);
+		return view('gudang/gudang_edit', $data);
 	}
 
 	// Update Gudang

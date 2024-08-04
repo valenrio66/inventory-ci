@@ -18,7 +18,7 @@ class PengirimanBarang extends ResourceController
 		$data['pengiriman'] = $model->getAll();
 		$data['current_user_id'] = session()->get('id_user'); // Mengambil ID user yang sedang login
 
-		return view('admin/pengiriman_view', $data);
+		return view('pengiriman/pengiriman_view', $data);
 	}
 
 	public function show($id = null)
@@ -85,7 +85,7 @@ class PengirimanBarang extends ResourceController
 			}
 		}
 
-		return view('admin/pengiriman_add', $data);
+		return view('pengiriman/pengiriman_add', $data);
 	}
 
 	public function edit($id = null)

@@ -12,13 +12,13 @@ class User extends BaseController
 		$userModel = new UserModel();
 		$data['users'] = $userModel->findAll();
 
-		return view('admin/user_view', $data);
+		return view('user/user_view', $data);
 	}
 	
 	// Function for Create User
 	public function renderPageCreateUser(): string
 	{
-		return view('admin/user_add');
+		return view('user/user_add');
 	}
 
 	// Function for Create User
@@ -48,7 +48,7 @@ class User extends BaseController
         $userModel = new UserModel();
 		$data['users'] = $userModel->getUserById($id);
 		
-		return view('admin/user_detail', $data);
+		return view('user/user_detail', $data);
     }
 
 	// Delete User
