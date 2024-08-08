@@ -83,7 +83,7 @@ class Rak extends BaseController
 		if ($rakModel->updateRakModel($id, $data)) {
 			return redirect()->to('/dashboard/rak')->with('message', 'Rak berhasil diupdate');
 		} else {
-			return redirect()->back()->withInput()->with('errors', $gudangModel->errors());
+			return redirect()->back()->withInput()->with('errors', $rakModel->errors());
 		}
 	}
 

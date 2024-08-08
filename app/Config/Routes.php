@@ -63,3 +63,4 @@ $routes->post('/barang/update/(:segment)', 'Barang::updateBarang/$1', ['filter' 
 $routes->get('/dashboard/pengirimanbarang', 'PengirimanBarang::index', ['filter' => 'auth']);
 $routes->post('/dashboard/pengirimanbarang/add', 'PengirimanBarang::create', ['filter' => 'auth']);
 $routes->match(['GET', 'POST'], '/dashboard/pengirimanbarang/add', 'PengirimanBarang::create');
+$routes->post('dashboard/pengirimanbarang/approve/(:segment)', 'PengirimanBarang::approve/$1', ['filter' => 'auth']);

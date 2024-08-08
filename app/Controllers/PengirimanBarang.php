@@ -10,7 +10,7 @@ use App\Models\GudangModel;
 use App\Models\UserModel;
 use CodeIgniter\RESTful\ResourceController;
 
-class PengirimanBarang extends ResourceController
+class PengirimanBarang extends BaseController
 {
 	public function index()
 	{
@@ -120,9 +120,8 @@ class PengirimanBarang extends ResourceController
 	public function approve($id_pengiriman)
 	{
 		$model = new PengirimanBarangModel();
-		$id_approval = session()->get('id_user'); // Mengambil ID user yang sedang login
 
-		if ($model->approvePengiriman($id_pengiriman, $id_approval)) {
+		if ($model->approvePengiriman($id_pengiriman)) {
 			return redirect()->to('/dashboard/pengirimanbarang')->with('success', 'Pengiriman approved successfully');
 		} else {
 			return redirect()->to('/dashboard/pengirimanbarang')->with('error', 'Failed to approve pengiriman');

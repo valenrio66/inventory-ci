@@ -57,23 +57,43 @@ class RakModel extends Model
 	// }
 
 	// Reduce Capacity when Sending Package
-	public function reduceCapacity($id_rak, $tipe_box, $jumlah)
-	{
-		$rak = $this->find($id_rak);
-		if ($rak) {
-			$field = 'kapasitas_' . strtolower($tipe_box);
-			$kapasitas = $rak[$field] - $jumlah;
-			return $this->update($id_rak,
-				[$field => $kapasitas]
-			);
+	public function reduceCapacity($id, $tipe_box, $jumlah, $volume_per_unit) {
+		log_message('debug', "Mengurangi kapasitas untuk rak ID: $id");
+		$rak = $this->find($id);
+		$volume_to_reduce = $jumlah * $volume_per_unit;
+	
+		$field_update = $this->determineField($tipe_box);
+	
+		if ($rak && ($rak[$field_update] >= $volume_to_reduce)) {
+			$data = [
+				$field_update => $rak[$field_update] - $volume_to_reduce
+			];
+			if ($this->update($id, $data)) {
+				log_message('info', "Kapasitas rak $id berhasil dikurangi.");
+				return true;
+			} else {
+				log_message('error', "Gagal mengupdate kapasitas rak $id.");
+				return false;
+			}
+		} else {
+			log_message('error', "Kapasitas rak $id tidak cukup.");
+			return false;
 		}
-		return false;
+	}
+	
+	private function determineField($tipe_box) {
+		switch ($tipe_box) {
+			case 'Fast Moving': return 'kapasitas_fast';
+			case 'Medium Moving': return 'kapasitas_medium';
+			case 'Slow Moving': return 'kapasitas_slow';
+			default: throw new \Exception("Tipe box tidak valid: $tipe_box");
+		}
 	}
 
 	// Untuk Update Rak
 	public function updateRakModel($id, $data)
 	{
-	    return $this->update($id, $data);
+		return $this->update($id, $data);
 	}
 
 	public function deleteRakModel($id)

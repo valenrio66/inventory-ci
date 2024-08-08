@@ -69,18 +69,32 @@ class BoxModel extends Model
 	// Untuk Update Box
 	public function updateBoxModel($id, $data)
 	{
-	    return $this->update($id, $data);
+		return $this->update($id, $data);
 	}
 
 	// Reduce Capacity when Sending Package
-	public function reduceCapacity($id_box, $jumlah)
+	public function reduceCapacity($id_box, $jumlah, $volume_per_unit)
 	{
+		log_message('debug', "Mengurangi kapasitas untuk box ID: $id_box");
 		$box = $this->find($id_box);
-		if ($box) {
-			$kapasitas_terpakai = $box['kapasitas_terpakai'] - $jumlah;
-			return $this->update($id_box, ['kapasitas_terpakai' => $kapasitas_terpakai]);
+		$volume_to_reduce = $jumlah * $volume_per_unit;
+
+		if ($box && ($box['kapasitas_tersedia'] >= $volume_to_reduce)) {
+			$data = [
+				'kapasitas_tersedia' => $box['kapasitas_tersedia'] - $volume_to_reduce,
+				'kapasitas_terpakai' => $box['kapasitas_terpakai'] + $volume_to_reduce
+			];
+			if ($this->update($id_box, $data)) {
+				log_message('info', "Kapasitas box $id_box berhasil dikurangi.");
+				return true;
+			} else {
+				log_message('error', "Gagal mengupdate kapasitas box $id_box.");
+				return false;
+			}
+		} else {
+			log_message('error', "Kapasitas box $id_box tidak cukup.");
+			return false;
 		}
-		return false;
 	}
 
 	public function deleteBoxModel($id)

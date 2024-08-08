@@ -81,9 +81,9 @@
 											<td><?= esc($item['tanggal_pengiriman']); ?></td>
 											<td><?= esc($item['status']); ?></td>
 											<td>
-												<?php if ($item['status'] == 'Pending') : ?>
-													<form action="<?= site_url('pengirimanbarang/approve/' . $item['id_pengiriman']); ?>" method="post" style="display:inline-block;">
-														<input type="hidden" name="id_approval" value="<?= esc($current_user_id); ?>">
+												<?php if ($userRole['role'] == 'Gudang Pusat' || $userRole['role'] == 'Gudang Bagian' && $item['status'] == 'Pending') : ?>
+													<form action="<?= site_url('/dashboard/pengirimanbarang/approve/' . $item['id_pengiriman']); ?>" method="post" style="display:inline-block;">
+														<input type="hidden" name="id_pengiriman" value="<?= esc($current_user_id); ?>">
 														<button type="submit" class="btn btn-success btn-sm">Approve</button>
 													</form>
 												<?php endif; ?>
