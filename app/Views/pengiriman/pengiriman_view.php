@@ -80,16 +80,19 @@
 											<td><?= esc($item['jumlah']); ?></td>
 											<td><?= esc($item['tanggal_pengiriman']); ?></td>
 											<td><?= esc($item['status']); ?></td>
+											<?php if ($userRole['role'] == 'Gudang Pusat' || $userRole['role'] == 'Gudang Bagian' && $item['status'] == 'Pending') : ?>
 											<td>
-												<?php if ($userRole['role'] == 'Gudang Pusat' || $userRole['role'] == 'Gudang Bagian' && $item['status'] == 'Pending') : ?>
-													<form action="<?= site_url('/dashboard/pengirimanbarang/approve/' . $item['id_pengiriman']); ?>" method="post" style="display:inline-block;">
+													<form id="approveKirim" action="<?= site_url('/dashboard/pengirimanbarang/approve/' . $item['id_pengiriman']); ?>" method="post" style="display:inline-block;">
 														<input type="hidden" name="id_pengiriman" value="<?= esc($current_user_id); ?>">
 														<button type="submit" class="btn btn-success btn-sm">Approve</button>
 													</form>
-												<?php endif; ?>
+											</td>
+											<?php elseif ($userRole['role'] == "Admin") : ?>
+											<td>
 												<a href="<?= site_url('pengirimanbarang/edit/' . $item['id_pengiriman']); ?>" class="btn btn-warning btn-sm">Edit</a>
 												<a href="<?= site_url('pengirimanbarang/delete/' . $item['id_pengiriman']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
 											</td>
+											<?php endif; ?>
 										</tr>
 									<?php endforeach; ?>
 								<?php else : ?>
@@ -123,4 +126,4 @@
 </main>
 
 <?= $this->include('content/footer') ?>
-<script src="<?= base_url('js/user/delete.js') ?>"></script>
+<script src="<?= base_url('js/pengirimanbarang/approve.js')?>"></script>
