@@ -37,7 +37,6 @@
                                             <th>Role</th>
                                             <th>Nomor HP</th>
                                             <th>Email</th>
-                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -58,9 +57,6 @@
                                                 </td>
                                                 <td>
                                                     <?= $user['email'] ?>
-                                                </td>
-                                                <td>
-                                                    <?= $user['status'] ?>
                                                 </td>
                                                 <td>
                                                     <a href="<?= base_url('/dashboard/user/detail/' . $user['id_user']) ?>" class="btn btn-info">Detail</a>

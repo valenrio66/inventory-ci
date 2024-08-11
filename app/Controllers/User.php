@@ -55,7 +55,7 @@ class User extends BaseController
 	public function deleteUser($id)
 	{
 		$userModel = new UserModel();
-		if ($userModel->deleteUserModel($id)) {
+		if ($userModel->deleteUser($id)) {
 			// Debugging message
 			return redirect()->to('/dashboard/user')->with('message', 'User berhasil dihapus');
 		} else {

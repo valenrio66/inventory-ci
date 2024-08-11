@@ -26,7 +26,7 @@
                                         <!-- Inputan Box -->
                                         <h5 class="card-title mt-2">Box</h5>
                                         <select id="id_box" name="id_box" class="form-control">
-                                            <option selected>Pilih Jenis User</option>
+                                            <option selected>Pilih Jenis Box</option>
                                             <?php foreach ($boxs as $box): ?>
                                                 <option value="<?= esc($box['id_box']); ?>">
                                                     <?= esc($box['id_box']); ?> - <?= esc($box['tipe_box']); ?>
