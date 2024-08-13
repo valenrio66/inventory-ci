@@ -127,4 +127,9 @@ class PengirimanBarang extends BaseController
 			return redirect()->to('/dashboard/pengirimanbarang')->with('error', 'Failed to approve pengiriman');
 		}
 	}
+
+	public function surat_pengiriman()
+	{
+		return view('pengiriman/surat_pengiriman');
+	}
 }

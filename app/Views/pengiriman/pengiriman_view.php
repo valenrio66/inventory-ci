@@ -36,6 +36,10 @@
 						<i class="align-middle" data-feather="list"></i>
 						Tambah Pengiriman Barang
 					</a>
+					<a href="<?= base_url('/dashboard/pengirimanbarang/suratpengiriman') ?>" type="button" class="btn btn-info me-2">
+						<i class="align-middle" data-feather="list"></i>
+						Surat Pengiriman
+					</a>
 				<?php endif; ?>
 			</div>
 		</div>
@@ -81,17 +85,17 @@
 											<td><?= esc($item['tanggal_pengiriman']); ?></td>
 											<td><?= esc($item['status']); ?></td>
 											<?php if ($userRole['role'] == 'Gudang Pusat' || $userRole['role'] == 'Gudang Bagian' && $item['status'] == 'Pending') : ?>
-											<td>
+												<td>
 													<form id="approveKirim" action="<?= site_url('/dashboard/pengirimanbarang/approve/' . $item['id_pengiriman']); ?>" method="post" style="display:inline-block;">
 														<input type="hidden" name="id_pengiriman" value="<?= esc($current_user_id); ?>">
 														<button type="submit" class="btn btn-success btn-sm">Approve</button>
 													</form>
-											</td>
-											<?php elseif ($userRole['role'] == "Admin") : ?>
-											<td>
-												<a href="<?= site_url('pengirimanbarang/edit/' . $item['id_pengiriman']); ?>" class="btn btn-warning btn-sm">Edit</a>
-												<a href="<?= site_url('pengirimanbarang/delete/' . $item['id_pengiriman']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
-											</td>
+												</td>
+											<?php elseif ($userRole['role'] == "Admin" || $userRole['role'] == "Super Admin") : ?>
+												<td>
+													<a href="<?= site_url('pengirimanbarang/edit/' . $item['id_pengiriman']); ?>" class="btn btn-warning btn-sm">Edit</a>
+													<a href="<?= site_url('pengirimanbarang/delete/' . $item['id_pengiriman']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
+												</td>
 											<?php endif; ?>
 										</tr>
 									<?php endforeach; ?>
@@ -126,4 +130,4 @@
 </main>
 
 <?= $this->include('content/footer') ?>
-<script src="<?= base_url('js/pengirimanbarang/approve.js')?>"></script>
+<script src="<?= base_url('js/pengirimanbarang/approve.js') ?>"></script>

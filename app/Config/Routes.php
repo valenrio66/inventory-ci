@@ -64,3 +64,4 @@ $routes->get('/dashboard/pengirimanbarang', 'PengirimanBarang::index', ['filter'
 $routes->post('/dashboard/pengirimanbarang/add', 'PengirimanBarang::create', ['filter' => 'auth']);
 $routes->match(['GET', 'POST'], '/dashboard/pengirimanbarang/add', 'PengirimanBarang::create');
 $routes->post('dashboard/pengirimanbarang/approve/(:segment)', 'PengirimanBarang::approve/$1', ['filter' => 'auth']);
+$routes->get('/dashboard/pengirimanbarang/suratpengiriman', 'PengirimanBarang::surat_pengiriman', ['filter' => 'auth']);
