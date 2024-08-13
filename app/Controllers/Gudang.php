@@ -20,7 +20,14 @@ class Gudang extends BaseController
 	public function renderPageAddGudang(): string
 	{
 		$userModel = new UserModel();
-		$data['users'] = $userModel->findAll();
+		// Muat data kepala gudang terlebih dahulu untuk diisi ke form
+		$kepalaPusat = $userModel->where('role', 'Gudang Pusat')->findAll();
+		$kepalaBagian = $userModel->where('role', 'Gudang Bagian')->findAll();
+
+		$data = [
+			'kepalaPusat' => $kepalaPusat,
+			'kepalaBagian' => $kepalaBagian
+		];
 
 
 		$gudangModel = new GudangModel();
@@ -33,18 +40,34 @@ class Gudang extends BaseController
 	public function addGudang()
 	{
 		$gudangModel = new GudangModel();
+		$userModel = new UserModel();
 
-		$rak = $this->request->getPost('kapasitas');
-		$dimensi_bin = 49.5 * 37 * 31; // Angka-angka ini satuannya dalam Centimeter
-		$bin = 15 * $dimensi_bin; // Rata-rata bin/box dalam satu rak adalah 15
-		$kapasitas = $rak * $bin;
+		$level = $this->request->getPost('level');
+		$roleMap = [
+			'Bagian' => 'Gudang Bagian',
+			'Pusat' => 'Gudang Pusat'
+		];
+
+		$role = $roleMap[$level] ?? null;
+		if (!$role) {
+			return redirect()->back()->withInput()->with('errors', ['Level tidak valid']);
+		}
+
+		$kepalaGudang = $userModel->select('user.id_user, user.nama, user.no_hp')
+			->where('role', $role)
+			->first();
+
+		if (!$kepalaGudang) {
+			return redirect()->back()->withInput()->with('errors', ['Kepala gudang tidak ditemukan']);
+		}
+
 		$data = [
 			'nama_gudang' => $this->request->getPost('nama_gudang'),
-			'id_kepala' => $this->request->getPost('id_kepala'),
-			'level' => $this->request->getPost('level'),
+			'id_kepala' => $kepalaGudang['id_user'],
+			'level' => $level,
 			'alamat' => $this->request->getPost('alamat'),
-			'no_hp' => $this->request->getPost('no_hp'),
-			'kapasitas' => $kapasitas
+			'no_hp' => $kepalaGudang['no_hp'],
+			'kapasitas' => $this->request->getPost('kapasitas')
 		];
 
 		if ($gudangModel->insert($data)) {

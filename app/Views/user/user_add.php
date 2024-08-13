@@ -53,11 +53,10 @@
                                     <h5 class="card-title mt-2">Nomor Handphone</h5>
                                     <input type="text" class="form-control" id="no_hp" name="no_hp" placeholder="Masukkan Nomor Handphone" required />
                                 </div>
-                                <div class="col-md-6">
-                                    <!-- Inputan Status -->
+                                <!-- <div class="col-md-6">
                                     <h5 class="card-title mt-2">Status</h5>
                                     <input type="text" class="form-control" id="status" name="status" value="Tidak Ada Status" disabled />
-                                </div>
+                                </div> -->
                             </div> 
 
 							<!-- Button Submit -->

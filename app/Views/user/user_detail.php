@@ -48,11 +48,6 @@
                                     <h5 class="card-title mt-2">Nomor Handphone</h5>
                                     <input type="text" class="form-control" id="no_hp" name="no_hp" value="<?= esc($users['no_hp']) ?>" disabled />
                                 </div>
-                                <div class="col-md-6">
-                                    <!-- Inputan Status -->
-                                    <h5 class="card-title mt-2">Status</h5>
-                                    <input type="text" class="form-control" id="status" name="status" value="<?= esc($users['status']) ?>" disabled />
-                                </div>
                             </div> 
 
 							<!-- Button Submit -->
