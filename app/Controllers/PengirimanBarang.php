@@ -53,7 +53,6 @@ class PengirimanBarang extends BaseController
 		$data['kepala_gudang'] = $userModel->findAll();
 
 		if ($this->request->getMethod() == 'POST') {
-			$pengirimanBarangModel  = new PengirimanBarangModel();
 			$requestData = $this->request->getPost();
 
 			$id_produk = $requestData['id_produk'];
@@ -65,27 +64,52 @@ class PengirimanBarang extends BaseController
 				return redirect()->to('/dashboard/pengirimanbarang/create')->with('error', 'Jumlah pengiriman melebihi stok yang tersedia');
 			}
 
-			// Update jumlah stok di tabel produk
-			$produkBaru['jumlah'] = $produk['jumlah'] - $jumlahPengiriman;
-			$barangModel->update($id_produk, $produkBaru);
-
-			// Siapkan data yang akan disisipkan ke database
-			$pengirimanData = [
-				'id_produk' => $id_produk,
-				'jumlah' => $jumlahPengiriman,
-				'tanggal_pengiriman' => $requestData['tanggal_pengiriman'],
-				'status' => 'Pending' // atau nilai lain sesuai logika aplikasi Anda
-			];
-
-			// Buat pengiriman
-			if ($pengirimanBarangModel->createPengiriman($pengirimanData)) {
-				return redirect()->to('/dashboard/pengirimanbarang')->with('success', 'Pengiriman created successfully');
-			} else {
-				return redirect()->to('/dashboard/pengirimanbarang/create')->with('error', 'Failed to create pengiriman');
-			}
+			// Kirim data ke halaman surat pengiriman
+			return redirect()->to('/dashboard/pengirimanbarang/suratpengiriman')
+				->with('pengirimanData', $requestData)
+				->with('success', 'Silakan konfirmasi pengiriman.');
 		}
 
 		return view('pengiriman/pengiriman_add', $data);
+	}
+
+	public function suratPengiriman()
+	{
+		$pengirimanData = session()->getFlashdata('pengirimanData');
+
+		if (!$pengirimanData) {
+			return redirect()->to('/dashboard/pengirimanbarang/create')->with('error', 'Data pengiriman tidak valid.');
+		}
+
+		return view('pengiriman/surat_pengiriman', ['pengirimanData' => $pengirimanData]);
+	}
+
+	public function submitPengiriman()
+	{
+		$pengirimanBarangModel = new PengirimanBarangModel();
+		$barangModel = new BarangModel();
+
+		$requestData = $this->request->getPost();
+		$id_produk = $requestData['id_produk'];
+		$jumlahPengiriman = $requestData['jumlah'];
+
+		// Update stok produk
+		$produk = $barangModel->find($id_produk);
+		$barangModel->update($id_produk, ['jumlah' => $produk['jumlah'] - $jumlahPengiriman]);
+
+		// Siapkan data pengiriman untuk disimpan
+		$pengirimanData = [
+			'id_produk' => $id_produk,
+			'jumlah' => $jumlahPengiriman,
+			'tanggal_pengiriman' => $requestData['tanggal_pengiriman'],
+			'status' => 'Pending'
+		];
+
+		// Simpan pengiriman ke database
+		$pengirimanBarangModel->insert($pengirimanData);
+
+		// Redirect ke halaman daftar pengiriman dengan pesan sukses
+		return redirect()->to('/dashboard/pengirimanbarang')->with('success', 'Pengiriman berhasil disimpan.');
 	}
 
 	public function edit($id = null)
@@ -126,10 +150,5 @@ class PengirimanBarang extends BaseController
 		} else {
 			return redirect()->to('/dashboard/pengirimanbarang')->with('error', 'Failed to approve pengiriman');
 		}
-	}
-
-	public function surat_pengiriman()
-	{
-		return view('pengiriman/surat_pengiriman');
 	}
 }

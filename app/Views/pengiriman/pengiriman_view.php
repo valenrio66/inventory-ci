@@ -36,10 +36,6 @@
 						<i class="align-middle" data-feather="list"></i>
 						Tambah Pengiriman Barang
 					</a>
-					<a href="<?= base_url('/dashboard/pengirimanbarang/suratpengiriman') ?>" type="button" class="btn btn-info me-2">
-						<i class="align-middle" data-feather="list"></i>
-						Surat Pengiriman
-					</a>
 				<?php endif; ?>
 			</div>
 		</div>

@@ -61,7 +61,10 @@ $routes->post('/barang/update/(:segment)', 'Barang::updateBarang/$1', ['filter' 
 
 // Pengiriman Barang
 $routes->get('/dashboard/pengirimanbarang', 'PengirimanBarang::index', ['filter' => 'auth']);
-$routes->post('/dashboard/pengirimanbarang/add', 'PengirimanBarang::create', ['filter' => 'auth']);
-$routes->match(['GET', 'POST'], '/dashboard/pengirimanbarang/add', 'PengirimanBarang::create');
+$routes->match(['get', 'post'], '/dashboard/pengirimanbarang/add', 'PengirimanBarang::create', ['filter' => 'auth']);
+$routes->match(['get', 'post'],'/dashboard/pengirimanbarang/suratpengiriman', 'PengirimanBarang::suratPengiriman', ['filter' => 'auth']);
+$routes->post('/dashboard/pengirimanbarang/submitpengiriman', 'PengirimanBarang::submitPengiriman', ['filter' => 'auth']);
 $routes->post('dashboard/pengirimanbarang/approve/(:segment)', 'PengirimanBarang::approve/$1', ['filter' => 'auth']);
-$routes->get('/dashboard/pengirimanbarang/suratpengiriman', 'PengirimanBarang::surat_pengiriman', ['filter' => 'auth']);
+$routes->get('/dashboard/pengirimanbarang/edit/(:segment)', 'PengirimanBarang::edit/$1', ['filter' => 'auth']);
+$routes->post('/dashboard/pengirimanbarang/edit/(:segment)', 'PengirimanBarang::edit/$1', ['filter' => 'auth']);
+$routes->get('/dashboard/pengirimanbarang/delete/(:segment)', 'PengirimanBarang::delete/$1', ['filter' => 'auth']);
