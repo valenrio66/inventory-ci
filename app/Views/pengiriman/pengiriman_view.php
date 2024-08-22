@@ -80,12 +80,17 @@
 											<td><?= esc($item['jumlah']); ?></td>
 											<td><?= esc($item['tanggal_pengiriman']); ?></td>
 											<td><?= esc($item['status']); ?></td>
-											<?php if ($userRole['role'] == 'Gudang Pusat' || $userRole['role'] == 'Gudang Bagian' && $item['status'] == 'Pending') : ?>
+											<?php if ($userRole['role'] == 'Gudang Pusat' || $userRole['role'] == 'Gudang Bagian') : ?>
 												<td>
-													<form id="approveKirim" action="<?= site_url('/dashboard/pengirimanbarang/approve/' . $item['id_pengiriman']); ?>" method="post" style="display:inline-block;">
-														<input type="hidden" name="id_pengiriman" value="<?= esc($current_user_id); ?>">
-														<button type="submit" class="btn btn-success btn-sm">Approve</button>
-													</form>
+													<?php if ($item['status'] == 'Pending') : ?>
+														<form id="approveKirim" action="<?= site_url('/dashboard/pengirimanbarang/approve/' . $item['id_pengiriman']); ?>" method="post" style="display:inline-block;">
+															<input type="hidden" name="id_pengiriman" value="<?= esc($current_user_id); ?>">
+															<button type="submit" class="btn btn-success btn-sm">Approve</button>
+														</form>
+														<a href="<?= base_url('/dashboard/pengirimanbarang/download/' . $item['id_pengiriman']); ?>" class="btn btn-primary">Download Surat</a>
+													<?php elseif ($item['status'] == 'Approved') : ?>
+														<span class="text-muted">No Action Required</span>
+													<?php endif; ?>
 												</td>
 											<?php elseif ($userRole['role'] == "Admin" || $userRole['role'] == "Super Admin") : ?>
 												<td>

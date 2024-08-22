@@ -8,7 +8,7 @@ use App\Models\BoxModel;
 use App\Models\RakModel;
 use App\Models\GudangModel;
 use App\Models\UserModel;
-use CodeIgniter\RESTful\ResourceController;
+use Dompdf\Dompdf;
 
 class PengirimanBarang extends BaseController
 {
@@ -110,6 +110,24 @@ class PengirimanBarang extends BaseController
 
 		// Redirect ke halaman daftar pengiriman dengan pesan sukses
 		return redirect()->to('/dashboard/pengirimanbarang')->with('success', 'Pengiriman berhasil disimpan.');
+	}
+
+	public function downloadPdf($id_pengiriman)
+	{
+		$model = new PengirimanBarangModel();
+		$item = $model->getShipmentWithProduct($id_pengiriman);
+
+		if (!$item) {
+			return redirect()->to('/dashboard/pengirimanbarang')->with('error', 'Shipment data not found.');
+		}
+
+		$htmlContent = view('pengiriman/surat_pengiriman_pdf', ['item' => $item]);
+
+		$dompdf = new Dompdf();
+		$dompdf->loadHtml($htmlContent);
+		$dompdf->setPaper('A4', 'portrait');
+		$dompdf->render();
+		$dompdf->stream("surat_pengiriman_barang_" . $id_pengiriman . ".pdf", array("Attachment" => true));
 	}
 
 	public function edit($id = null)
