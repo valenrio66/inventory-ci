@@ -46,6 +46,17 @@ class PengirimanBarangModel extends Model
 		return $this->find($id_pengiriman);
 	}
 
+	public function getShipmentWithProduct($id_pengiriman)
+	{
+		return $this->db->table('pengiriman_barang')
+		->select('pengiriman_barang.*, produk.id_produk, produk.nama_produk')
+		->join('produk', 'pengiriman_barang.id_produk = produk.id_produk')
+		->where('pengiriman_barang.id_pengiriman', $id_pengiriman)
+			->get()
+			->getRowArray();
+	}
+
+
 	public function createPengiriman($data)
 	{
 		// Siapkan data yang akan disisipkan ke database, hanya sisipkan kolom yang ada di tabel
