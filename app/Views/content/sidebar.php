@@ -155,21 +155,9 @@
 							Submenu Kepala Gudang Bagian
 						</li>
 
-						<li class="sidebar-item <?= isActive('profile', $currentPage) ?>">
-							<a class="sidebar-link" href="<?= base_url('/dashboard/karyawan/profil') ?>">
-								<i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
-							</a>
-						</li>
-
-						<li class="sidebar-item <?= isActive('nilai_pemeriksaan', $currentPage) ?>">
-							<a class="sidebar-link" href="<?= base_url('/dashboard/karyawan/nilai_pemeriksaan') ?>">
-								<i class="align-middle" data-feather="list"></i> <span class="align-middle">Rekap Pengiriman</span>
-							</a>
-						</li>
-
-						<li class="sidebar-item <?= isActive('nilai_pemeriksaan', $currentPage) ?>">
-							<a class="sidebar-link" href="<?= base_url('/dashboard/karyawan/nilai_pemeriksaan') ?>">
-								<i class="align-middle" data-feather="list"></i> <span class="align-middle">Rekap Pengeluaran</span>
+						<li class="sidebar-item <?= isActive('pengirimanbarang', $currentPage) ?>">
+							<a class="sidebar-link" href="<?= base_url('/dashboard/pengirimanbarang') ?>">
+								<i class="align-middle" data-feather="list"></i> <span class="align-middle">List Pengiriman</span>
 							</a>
 						</li>
 
@@ -179,27 +167,9 @@
 							Submenu Kepala Gudang Pusat
 						</li>
 
-						<li class="sidebar-item <?= isActive('profile', $currentPage) ?>">
-							<a class="sidebar-link" href="<?= base_url('/dashboard/assign/profil') ?>">
-								<i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
-							</a>
-						</li>
-
 						<li class="sidebar-item <?= isActive('pengirimanbarang', $currentPage) ?>">
 							<a class="sidebar-link" href="<?= base_url('/dashboard/pengirimanbarang') ?>">
 								<i class="align-middle" data-feather="user"></i> <span class="align-middle">List Pengiriman</span>
-							</a>
-						</li>
-
-						<li class="sidebar-item <?= isActive('nilai_pemeriksaan', $currentPage) ?>">
-							<a class="sidebar-link" href="<?= base_url('/dashboard/assign/nilai_pemeriksaan') ?>">
-								<i class="align-middle" data-feather="list"></i> <span class="align-middle">Rekap Pengiriman</span>
-							</a>
-						</li>
-
-						<li class="sidebar-item <?= isActive('nilai_pemeriksaan', $currentPage) ?>">
-							<a class="sidebar-link" href="<?= base_url('/dashboard/assign/nilai_pemeriksaan') ?>">
-								<i class="align-middle" data-feather="list"></i> <span class="align-middle">Rekap Pengeluaran</span>
 							</a>
 						</li>
 					<?php endif; ?>
