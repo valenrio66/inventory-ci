@@ -63,7 +63,7 @@
 									</div>
 									<div class="col-md-6">
 										<h5 class="card-title">Tanggal Pengiriman</h5>
-										<input type="date" name="tanggal_pengiriman" id="tanggal_pengiriman" class="form-control" required>
+										<input type="datetime-local" name="tanggal_pengiriman" id="tanggal_pengiriman" class="form-control" required>
 									</div>
 								</div>
 							</div>
