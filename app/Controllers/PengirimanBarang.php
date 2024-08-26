@@ -81,8 +81,25 @@ class PengirimanBarang extends BaseController
 			return redirect()->to('/dashboard/pengirimanbarang/create')->with('error', 'Data pengiriman tidak valid.');
 		}
 
+		// Ambil id_produk dari pengirimanData
+		$id_produk = $pengirimanData['id_produk'];
+
+		// Lakukan join antara pengiriman_barang dan produk
+		$barangModel = new BarangModel();
+		$produk = $barangModel->select('produk.nama_produk')
+		->where('produk.id_produk', $id_produk)
+			->first();
+
+		if (!$produk) {
+			return redirect()->to('/dashboard/pengirimanbarang/create')->with('error', 'Produk tidak ditemukan.');
+		}
+
+		// Gabungkan nama_produk dengan data pengiriman
+		$pengirimanData['nama_produk'] = $produk['nama_produk'];
+
 		return view('pengiriman/surat_pengiriman', ['pengirimanData' => $pengirimanData]);
 	}
+
 
 	public function submitPengiriman()
 	{

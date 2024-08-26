@@ -45,7 +45,7 @@
                                 <tbody>
                                     <tr>
                                         <td>1</td>
-                                        <td><?= esc($pengirimanData['id_produk']) ?? '...' ?></td>
+                                        <td><?= esc($pengirimanData['nama_produk']) ?? '...' ?></td>
                                         <td><?= esc($pengirimanData['jumlah']) ?? '...' ?></td>
                                     </tr>
                                 </tbody>
