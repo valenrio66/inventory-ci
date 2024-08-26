@@ -39,6 +39,8 @@
                                             <th>Jenis/Tipe</th>
 											<th>Serial Number</th>
 											<th>Kode Material SAP</th>
+											<th>Lokasi Rak</th>
+											<th>Lokasi Gudang</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -65,6 +67,12 @@
                                                 </td>
 												<td>
                                                     <?= $barang['kode_material_sap'] ?>
+                                                </td>
+												<td>
+                                                    <?= $barang['id'] ?>
+                                                </td>
+												<td>
+                                                    <?= $barang['nama_gudang'] ?>
                                                 </td>
                                                 <td>
                                                     <a href="<?= base_url('/dashboard/barang/detail/' . $barang['id_produk']) ?>" class="btn btn-info">Detail</a>

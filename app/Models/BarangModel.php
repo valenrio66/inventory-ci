@@ -13,8 +13,10 @@ class BarangModel extends Model
     // Untuk Get All
     public function getBarangWithBox()
     {
-        return $this->select('produk.*, box.id_box')
+        return $this->select('produk.*, box.id_box, rak.*, gudang.*')
             ->join('box', 'box.id_box = produk.id_box')
+			->join('rak', 'box.id_rak = rak.id')
+			->join('gudang', 'rak.id_gudang = gudang.id_gudang')
             ->findAll();
     }
 
