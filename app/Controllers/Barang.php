@@ -1,6 +1,7 @@
-<?php 
+<?php
 
 namespace App\Controllers;
+
 use App\Models\BarangModel;
 use App\Models\BoxModel;
 use App\Models\RakModel;
@@ -17,8 +18,29 @@ class Barang extends BaseController
 		return view('barang/barang_view', $data);
 	}
 
+	// Search Barang
+	public function searchBarang()
+	{
+		$searchTerm = $this->request->getGet('search');
+		$barangModel = new BarangModel();
+
+		if ($searchTerm) {
+			$data['barangs'] = $barangModel->like('nama_produk', $searchTerm)
+				->orLike('merk', $searchTerm)
+				->orLike('jenis_tipe', $searchTerm)
+				->orLike('serial_number', $searchTerm)
+				->orLike('id_produk', $searchTerm)
+				->orLike('id_box', $searchTerm)
+				->findAll();
+		} else {
+			$data['barangs'] = $barangModel->findAll();
+		}
+
+		return view('barang/barang_view', $data);
+	}
+
 	// Get All Barang By Id
-	public function renderPageDetailBarang($id) : string 
+	public function renderPageDetailBarang($id): string
 	{
 		$barangModel = new BarangModel();
 		$data['barangs'] = $barangModel->getBarangWithBoxById($id);
@@ -56,28 +78,28 @@ class Barang extends BaseController
 		$dimensi_barang = $this->request->getPost('panjang') * $this->request->getPost('lebar') * $this->request->getPost('tinggi');
 
 		$boxModel = new BoxModel();
-        $rakModel = new RakModel();
-        $gudangModel = new GudangModel();
+		$rakModel = new RakModel();
+		$gudangModel = new GudangModel();
 
 		$box = $boxModel->find($id_box);
-        $rak = $rakModel->find($box['id_rak']);
-        $gudang = $gudangModel->find($rak['id_gudang']);
-		
+		$rak = $rakModel->find($box['id_rak']);
+		$gudang = $gudangModel->find($rak['id_gudang']);
+
 		$barangModel = new BarangModel();
 		$lastProduct = $barangModel->getLastProductInBox($id_box);
 		$productCountInBox = isset($lastProduct['urutan']) ? $lastProduct['urutan'] + 1 : 1;
-		
+
 		// Untuk membuat kode unik Barang/Produk
-		$id_produk = strtoupper(substr($merk, 0, 1)) 
-					. strtoupper(substr($jenis_tipe, 0, 5)) 
-					. $id_box 
-					. $productCountInBox;
+		$id_produk = strtoupper(substr($merk, 0, 1))
+			. strtoupper(substr($jenis_tipe, 0, 5))
+			. $id_box
+			. $productCountInBox;
 		$nomor_urut_gudang = $id_box . $productCountInBox;
 
 		// Update capacities
-        $boxModel->updateCapacity($id_box, $dimensi_barang);
-        $rakModel->updateCapacity($rak['id'], $dimensi_barang, $box['tipe_box']);
-        $gudangModel->updateCapacity($gudang['id_gudang'], $dimensi_barang);
+		$boxModel->updateCapacity($id_box, $dimensi_barang);
+		$rakModel->updateCapacity($rak['id'], $dimensi_barang, $box['tipe_box']);
+		$gudangModel->updateCapacity($gudang['id_gudang'], $dimensi_barang);
 
 		$data = [
 			'id_produk' => $id_produk,
@@ -115,7 +137,4 @@ class Barang extends BaseController
 			return redirect()->back()->withInput()->with('errors', $barangModel->errors());
 		}
 	}
-
-
 }
-?>
