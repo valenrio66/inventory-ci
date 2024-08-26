@@ -1,55 +1,55 @@
 <?= $this->include('content/sidebar') ?>
 <?= $this->include('content/header') ?>
 
-	<?php
-		// Periksa apakah user ID tersedia di sesi
-		$userId = session('id_user') ?? null;
+<?php
+// Periksa apakah user ID tersedia di sesi
+$userId = session('id_user') ?? null;
 
-		if ($userId) {
-		// Periksa apakah model user ada dan dapat digunakan
-			if (class_exists('\App\Models\UserModel')) {
-				$userModel = new \App\Models\UserModel();
+if ($userId) {
+	// Periksa apakah model user ada dan dapat digunakan
+	if (class_exists('\App\Models\UserModel')) {
+		$userModel = new \App\Models\UserModel();
 
-				// Periksa apakah userRole dapat diambil dari model
-				if (method_exists($userModel, 'getUserById')) {
-					$userRole = $userModel->getUserById($userId);
-				} else {
-					$userRole['role'] = ""; // Jika method tidak ada, atur ke Guest
-						}
-				} else {
-					$userRole['role'] = ""; // Jika model tidak ada, atur ke Guest
-				}
-			} else {
-				$userRole['role'] = ""; // Jika user ID tidak tersedia di sesi, atur ke Guest
+		// Periksa apakah userRole dapat diambil dari model
+		if (method_exists($userModel, 'getUserById')) {
+			$userRole = $userModel->getUserById($userId);
+		} else {
+			$userRole['role'] = ""; // Jika method tidak ada, atur ke Guest
 		}
+	} else {
+		$userRole['role'] = ""; // Jika model tidak ada, atur ke Guest
+	}
+} else {
+	$userRole['role'] = ""; // Jika user ID tidak tersedia di sesi, atur ke Guest
+}
+?>
+
+<?php if ($userRole['role'] == "Super Admin") : ?>
+	<?php
+	// Ambil data dari model User
+	$userModel = new \App\Models\UserModel();
+	$users = $userModel->findAll();
+
+	// Ambil data dari model Gudang
+	$gudangModel = new \App\Models\GudangModel();
+	$gudangs = $gudangModel->getGudangWithKepala();
+
+	// Ambil data dari model Rak
+	$rakModel = new \App\Models\RakModel();
+	$raks = $rakModel->getRakWithGudang();
+
+	// Ambil data dari model Box
+	$boxModel = new \App\Models\BoxModel();
+	$boxs = $boxModel->getBoxWithRak();
+
+	// Ambil data dari Barang
+	$barangModel = new \App\Models\BarangModel();
+	$barangs = $barangModel->getBarangWithBox();
+
+	// Ambil data dari model Pengiriman
+	$pengirimanModel = new \App\Models\PengirimanBarangModel();
+	$pengiriman = $pengirimanModel->getAll();
 	?>
-
-	<?php if ($userRole['role'] == "Super Admin") : ?>
-		<?php
-			// Ambil data dari model User
-			$userModel = new \App\Models\UserModel();
-			$users = $userModel->findAll();
-
-			// Ambil data dari model Gudang
-			$gudangModel = new \App\Models\GudangModel();
-			$gudangs = $gudangModel->getGudangWithKepala();
-
-			// Ambil data dari model Rak
-			$rakModel = new \App\Models\RakModel();
-			$raks = $rakModel->getRakWithGudang();
-
-			// Ambil data dari model Box
-			$boxModel = new \App\Models\BoxModel();
-			$boxs = $boxModel->getBoxWithRak();
-			
-			// Ambil data dari Barang
-			$barangModel = new \App\Models\BarangModel();
-			$barangs = $barangModel->getBarangWithBox();
-
-			// Ambil data dari model Pengiriman
-			$pengirimanModel = new \App\Models\PengirimanBarangModel();
-			$pengiriman = $pengirimanModel->getAll();
-		?>
 	<main class="content">
 		<div class="container-fluid p-0">
 			<h5 class="right-aligned" style="float: right">
@@ -195,10 +195,10 @@
 
 		<!-- View Tabel Pengiriman -->
 		<?php
-			// Ambil data dari model Key Result
-			$pengirimanModel = new \App\Models\PengirimanBarangModel();
+		// Ambil data dari model Key Result
+		$pengirimanModel = new \App\Models\PengirimanBarangModel();
 
-			$data['pengiriman'] = $pengirimanModel->getAll();
+		$data['pengiriman'] = $pengirimanModel->getAll();
 		?>
 		<div class="container-fluid p-0">
 			<h1 class="h3 mb-3"><b>Pengiriman Barang</b></h1>
@@ -207,6 +207,8 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-header">
+						<!-- Input Search -->
+						<input type="text" id="searchInput" class="form-control me-2" placeholder="Cari Barang..." onkeyup="searchPengiriman()">
 						<div class="table-container mt-3">
 							<table id="example" class="table table-striped" style="width: 100%">
 								<thead>
@@ -268,28 +270,28 @@
 		</div>
 	</main>
 
-	<?php elseif ($userRole['role'] == "Admin") : ?>
-		<?php
-			// Ambil data dari model Gudang
-			$gudangModel = new \App\Models\GudangModel();
-			$gudangs = $gudangModel->getGudangWithKepala();
+<?php elseif ($userRole['role'] == "Admin") : ?>
+	<?php
+	// Ambil data dari model Gudang
+	$gudangModel = new \App\Models\GudangModel();
+	$gudangs = $gudangModel->getGudangWithKepala();
 
-			// Ambil data dari model Rak
-			$rakModel = new \App\Models\RakModel();
-			$raks = $rakModel->getRakWithGudang();
+	// Ambil data dari model Rak
+	$rakModel = new \App\Models\RakModel();
+	$raks = $rakModel->getRakWithGudang();
 
-			// Ambil data dari model Box
-			$boxModel = new \App\Models\BoxModel();
-			$boxs = $boxModel->getBoxWithRak();
-			
-			// Ambil data dari Barang
-			$barangModel = new \App\Models\BarangModel();
-			$barangs = $barangModel->getBarangWithBox();
+	// Ambil data dari model Box
+	$boxModel = new \App\Models\BoxModel();
+	$boxs = $boxModel->getBoxWithRak();
 
-			// Ambil data dari model Pengiriman
-			$pengirimanModel = new \App\Models\PengirimanBarangModel();
-			$pengiriman = $pengirimanModel->getAll();
-		?>
+	// Ambil data dari Barang
+	$barangModel = new \App\Models\BarangModel();
+	$barangs = $barangModel->getBarangWithBox();
+
+	// Ambil data dari model Pengiriman
+	$pengirimanModel = new \App\Models\PengirimanBarangModel();
+	$pengiriman = $pengirimanModel->getAll();
+	?>
 	<main class="content">
 		<div class="container-fluid p-0">
 			<h5 class="right-aligned" style="float: right">
@@ -413,10 +415,10 @@
 
 		<!-- View Tabel Pengiriman -->
 		<?php
-			// Ambil data dari model Key Result
-			$pengirimanModel = new \App\Models\PengirimanBarangModel();
+		// Ambil data dari model Key Result
+		$pengirimanModel = new \App\Models\PengirimanBarangModel();
 
-			$data['pengiriman'] = $pengirimanModel->getAll();
+		$data['pengiriman'] = $pengirimanModel->getAll();
 		?>
 		<div class="container-fluid p-0">
 			<h1 class="h3 mb-3"><b>Pengiriman Barang</b></h1>
@@ -425,6 +427,8 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-header">
+						<!-- Input Search -->
+						<input type="text" id="searchInput" class="form-control me-2" placeholder="Cari Barang..." onkeyup="searchPengiriman()">
 						<div class="table-container mt-3">
 							<table id="example" class="table table-striped" style="width: 100%">
 								<thead>
@@ -485,39 +489,39 @@
 			</div>
 		</div>
 	</main>
-	<?php elseif ($userRole['role'] == "Gudang Pusat") : ?>
-		<?php
-			// Ambil data dari model User
-			$userModel = new \App\Models\UserModel();
-			$users = $userModel->findAll();
+<?php elseif ($userRole['role'] == "Gudang Pusat") : ?>
+	<?php
+	// Ambil data dari model User
+	$userModel = new \App\Models\UserModel();
+	$users = $userModel->findAll();
 
-			// Ambil data dari model Gudang
-			$gudangModel = new \App\Models\GudangModel();
-			$gudangs = $gudangModel->getGudangWithKepala();
+	// Ambil data dari model Gudang
+	$gudangModel = new \App\Models\GudangModel();
+	$gudangs = $gudangModel->getGudangWithKepala();
 
-			// Ambil data dari model Rak
-			$rakModel = new \App\Models\RakModel();
-			$raks = $rakModel->getRakWithGudang();
+	// Ambil data dari model Rak
+	$rakModel = new \App\Models\RakModel();
+	$raks = $rakModel->getRakWithGudang();
 
-			// Ambil data dari model Box
-			$boxModel = new \App\Models\BoxModel();
-			$boxs = $boxModel->getBoxWithRak();
-			
-			// Ambil data dari Barang
-			$barangModel = new \App\Models\BarangModel();
-			$barangs = $barangModel->getBarangWithBox();
+	// Ambil data dari model Box
+	$boxModel = new \App\Models\BoxModel();
+	$boxs = $boxModel->getBoxWithRak();
 
-			// Ambil data dari model Pengiriman
-			$pengirimanModel = new \App\Models\PengirimanBarangModel();
-			$pengiriman = $pengirimanModel->getAll();
-		?>
-		<main class="content">
+	// Ambil data dari Barang
+	$barangModel = new \App\Models\BarangModel();
+	$barangs = $barangModel->getBarangWithBox();
+
+	// Ambil data dari model Pengiriman
+	$pengirimanModel = new \App\Models\PengirimanBarangModel();
+	$pengiriman = $pengirimanModel->getAll();
+	?>
+	<main class="content">
 		<!-- View Tabel Pengiriman -->
 		<?php
-			// Ambil data dari model Key Result
-			$pengirimanModel = new \App\Models\PengirimanBarangModel();
+		// Ambil data dari model Key Result
+		$pengirimanModel = new \App\Models\PengirimanBarangModel();
 
-			$data['pengiriman'] = $pengirimanModel->getAll();
+		$data['pengiriman'] = $pengirimanModel->getAll();
 		?>
 		<div class="container-fluid p-0">
 			<h1 class="h3 mb-3"><b>Pengiriman Barang</b></h1>
@@ -526,6 +530,8 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-header">
+						<!-- Input Search -->
+						<input type="text" id="searchInput" class="form-control me-2" placeholder="Cari Barang..." onkeyup="searchPengiriman()">
 						<div class="table-container mt-3">
 							<table id="example" class="table table-striped" style="width: 100%">
 								<thead>
@@ -585,40 +591,40 @@
 				</div>
 			</div>
 		</div>
-		</main>
-	<?php elseif ($userRole['role'] == "Gudang Bagian") : ?>
-		<?php
-			// Ambil data dari model User
-			$userModel = new \App\Models\UserModel();
-			$users = $userModel->findAll();
+	</main>
+<?php elseif ($userRole['role'] == "Gudang Bagian") : ?>
+	<?php
+	// Ambil data dari model User
+	$userModel = new \App\Models\UserModel();
+	$users = $userModel->findAll();
 
-			// Ambil data dari model Gudang
-			$gudangModel = new \App\Models\GudangModel();
-			$gudangs = $gudangModel->getGudangWithKepala();
+	// Ambil data dari model Gudang
+	$gudangModel = new \App\Models\GudangModel();
+	$gudangs = $gudangModel->getGudangWithKepala();
 
-			// Ambil data dari model Rak
-			$rakModel = new \App\Models\RakModel();
-			$raks = $rakModel->getRakWithGudang();
+	// Ambil data dari model Rak
+	$rakModel = new \App\Models\RakModel();
+	$raks = $rakModel->getRakWithGudang();
 
-			// Ambil data dari model Box
-			$boxModel = new \App\Models\BoxModel();
-			$boxs = $boxModel->getBoxWithRak();
-			
-			// Ambil data dari Barang
-			$barangModel = new \App\Models\BarangModel();
-			$barangs = $barangModel->getBarangWithBox();
+	// Ambil data dari model Box
+	$boxModel = new \App\Models\BoxModel();
+	$boxs = $boxModel->getBoxWithRak();
 
-			// Ambil data dari model Pengiriman
-			$pengirimanModel = new \App\Models\PengirimanBarangModel();
-			$pengiriman = $pengirimanModel->getAll();
-		?>
-		<main class="content">
+	// Ambil data dari Barang
+	$barangModel = new \App\Models\BarangModel();
+	$barangs = $barangModel->getBarangWithBox();
+
+	// Ambil data dari model Pengiriman
+	$pengirimanModel = new \App\Models\PengirimanBarangModel();
+	$pengiriman = $pengirimanModel->getAll();
+	?>
+	<main class="content">
 		<!-- View Tabel Pengiriman -->
 		<?php
-			// Ambil data dari model Key Result
-			$pengirimanModel = new \App\Models\PengirimanBarangModel();
+		// Ambil data dari model Key Result
+		$pengirimanModel = new \App\Models\PengirimanBarangModel();
 
-			$data['pengiriman'] = $pengirimanModel->getAll();
+		$data['pengiriman'] = $pengirimanModel->getAll();
 		?>
 		<div class="container-fluid p-0">
 			<h1 class="h3 mb-3"><b>Pengiriman Barang</b></h1>
@@ -627,6 +633,8 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-header">
+						<!-- Input Search -->
+						<input type="text" id="searchInput" class="form-control me-2" placeholder="Cari Barang..." onkeyup="searchPengiriman()">
 						<div class="table-container mt-3">
 							<table id="example" class="table table-striped" style="width: 100%">
 								<thead>
@@ -686,24 +694,47 @@
 				</div>
 			</div>
 		</div>
-		</main>
-	<?php else : ?>
-		<main class="content">
+	</main>
+<?php else : ?>
+	<main class="content">
 		<div class="container-fluid p-0">
 			<h1 class="h3 mb-3">Blank Page</h1>
-				<div class="row">
-					<div class="col-12">
-						<div class="card">
-							<div class="card-header">
-								<h5 class="card-title mb-0">Empty card</h5>
-							</div>
-							<div class="card-body">
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h5 class="card-title mb-0">Empty card</h5>
+						</div>
+						<div class="card-body">
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</main>
-	<?php endif; ?>
+<?php endif; ?>
+<script>
+	function searchPengiriman() {
+		var input, filter, table, tr, td, i, j, txtValue;
+		input = document.getElementById('searchInput');
+		filter = input.value.toUpperCase();
+		table = document.getElementById('example');
+		tr = table.getElementsByTagName('tr');
+
+		for (i = 1; i < tr.length; i++) {
+			tr[i].style.display = 'none';
+			td = tr[i].getElementsByTagName('td');
+			for (j = 0; j < td.length; j++) {
+				if (td[j]) {
+					txtValue = td[j].textContent || td[j].innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = '';
+						break;
+					}
+				}
+			}
+		}
+	}
+</script>
 
 <?= $this->include('content/footer') ?>

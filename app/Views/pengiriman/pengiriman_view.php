@@ -37,6 +37,8 @@
 						Tambah Pengiriman Barang
 					</a>
 				<?php endif; ?>
+				<!-- Input Search -->
+				<input type="text" id="searchInput" class="form-control me-2" placeholder="Cari Barang..." onkeyup="searchPengiriman()">
 			</div>
 		</div>
 	</div>
@@ -54,6 +56,7 @@
 							<thead>
 								<tr style="text-align: center; vertical-align: middle">
 									<th hidden></th>
+									<th>Kode Produk</th>
 									<th>Nama Produk</th>
 									<th>Box</th>
 									<th>Rak</th>
@@ -72,6 +75,7 @@
 									<?php foreach ($pengiriman as $item) : ?>
 										<tr style="text-align: center; vertical-align: middle">
 											<td hidden></td>
+											<td><?= esc($item['id_produk']); ?></td>
 											<td><?= esc($item['nama_produk']); ?></td>
 											<td><?= esc($item['id_box']); ?></td>
 											<td><?= esc($item['id_rak']); ?></td>
@@ -132,3 +136,26 @@
 
 <?= $this->include('content/footer') ?>
 <script src="<?= base_url('js/pengirimanbarang/approve.js') ?>"></script>
+<script>
+	function searchPengiriman() {
+		var input, filter, table, tr, td, i, j, txtValue;
+		input = document.getElementById('searchInput');
+		filter = input.value.toUpperCase();
+		table = document.getElementById('example');
+		tr = table.getElementsByTagName('tr');
+
+		for (i = 1; i < tr.length; i++) {
+			tr[i].style.display = 'none';
+			td = tr[i].getElementsByTagName('td');
+			for (j = 0; j < td.length; j++) {
+				if (td[j]) {
+					txtValue = td[j].textContent || td[j].innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = '';
+						break;
+					}
+				}
+			}
+		}
+	}
+</script>

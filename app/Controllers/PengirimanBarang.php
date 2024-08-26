@@ -21,6 +21,27 @@ class PengirimanBarang extends BaseController
 		return view('pengiriman/pengiriman_view', $data);
 	}
 
+	// Search Pengiriman
+	public function searchPengiriman()
+	{
+		$searchTerm = $this->request->getGet('search');
+		$pengirimanModel = new PengirimanBarangModel();
+
+		if ($searchTerm) {
+			$data['pengirimans'] = $pengirimanModel->like('nama_produk', $searchTerm)
+				->orLike('merk', $searchTerm)
+				->orLike('jenis_tipe', $searchTerm)
+				->orLike('serial_number', $searchTerm)
+				->orLike('id_produk', $searchTerm)
+				->orLike('id_box', $searchTerm)
+				->findAll();
+		} else {
+			$data['pengirimans'] = $pengirimanModel->findAll();
+		}
+
+		return view('pengiriman/pengiriman_view', $data);
+	}
+
 	public function show($id = null)
 	{
 		$model = new PengirimanBarangModel();
