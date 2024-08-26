@@ -51,6 +51,15 @@ class User extends BaseController
 		return view('user/user_detail', $data);
     }
 
+	// Render Page Profile User
+	public function renderPageProfileUser($id): string
+    {
+        $userModel = new UserModel();
+		$data['users'] = $userModel->getUserById($id);
+		
+		return view('user/profile', $data);
+    }
+
 	// Delete User
 	public function deleteUser($id)
 	{
