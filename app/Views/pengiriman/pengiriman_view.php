@@ -37,8 +37,6 @@
 						Tambah Pengiriman Barang
 					</a>
 				<?php endif; ?>
-				<!-- Input Search -->
-				<input type="text" id="searchInput" class="form-control me-2" placeholder="Cari Barang..." onkeyup="searchPengiriman()">
 			</div>
 		</div>
 	</div>
@@ -46,6 +44,8 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header">
+					<!-- Input Search -->
+					<input type="text" id="searchInput" class="form-control me-2" placeholder="Cari Barang..." onkeyup="searchPengiriman()">
 					<div class="row no-gutters" style="height: 40px">
 						<h1 class="h3 mt-2">Tabel Pengiriman Barang</h1>
 					</div>
