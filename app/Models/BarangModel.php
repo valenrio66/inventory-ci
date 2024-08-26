@@ -8,7 +8,7 @@ class BarangModel extends Model
 {
     protected $table = 'produk';
     protected $primaryKey = 'id_produk';
-    protected $allowedFields = ['id_produk','nama_produk', 'id_box', 'klasifikasi_material', 'merk', 'jenis_tipe', 'serial_number', 'kode_material_sap', 'jumlah', 'satuan', 'harga_satuan', 'jumlah_harga', 'nomor_urut_gudang', 'dimensi_barang'];
+    protected $allowedFields = ['id_produk','nama_produk', 'id_box', 'klasifikasi_material', 'merk', 'jenis_tipe', 'serial_number', 'kode_material_sap', 'jumlah', 'total_stok', 'satuan', 'harga_satuan', 'jumlah_harga', 'nomor_urut_gudang', 'dimensi_barang'];
 
     // Untuk Get All
     public function getBarangWithBox()

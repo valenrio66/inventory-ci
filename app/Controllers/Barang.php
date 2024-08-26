@@ -101,6 +101,8 @@ class Barang extends BaseController
 		$rakModel->updateCapacity($rak['id'], $dimensi_barang, $box['tipe_box']);
 		$gudangModel->updateCapacity($gudang['id_gudang'], $dimensi_barang);
 
+		$jumlah = $this->request->getPost('jumlah');
+
 		$data = [
 			'id_produk' => $id_produk,
 			'nama_produk' => $this->request->getPost('nama_produk'),
@@ -110,7 +112,8 @@ class Barang extends BaseController
 			'jenis_tipe' => $jenis_tipe,
 			'serial_number' => $this->request->getPost('serial_number'),
 			'kode_material_sap' => $this->request->getPost('kode_material_sap'),
-			'jumlah' => $this->request->getPost('jumlah'),
+			'jumlah' => $jumlah,
+			'total_stok' => $jumlah,
 			'satuan' => $this->request->getPost('satuan'),
 			'harga_satuan' => $this->request->getPost('harga_satuan'),
 			'nomor_urut_gudang' => $nomor_urut_gudang,

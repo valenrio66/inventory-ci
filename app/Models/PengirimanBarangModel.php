@@ -32,7 +32,7 @@ class PengirimanBarangModel extends Model
 
 	public function getAll()
 	{
-		return $this->select('pengiriman_barang.*, produk.nama_produk, gudang.nama_gudang, box.id_box, rak.id AS id_rak, gudang.id_gudang, gudang.id_kepala, user.id_user, user.nama')
+		return $this->select('pengiriman_barang.*, produk.nama_produk, produk.total_stok, gudang.nama_gudang, box.id_box, rak.id AS id_rak, gudang.id_gudang, gudang.id_kepala, user.id_user, user.nama')
 			->join('produk', 'pengiriman_barang.id_produk = produk.id_produk')
 			->join('box', 'produk.id_box = box.id_box') // Pastikan relasi ini benar
 			->join('rak', 'box.id_rak = rak.id') // Pastikan relasi ini benar

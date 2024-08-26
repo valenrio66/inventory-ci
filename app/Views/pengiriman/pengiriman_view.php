@@ -59,7 +59,7 @@
 									<th>Rak</th>
 									<th>Gudang</th>
 									<th>Kepala Gudang</th>
-									<th>Jumlah</th>
+									<th>Jumlah Barang yang Dikirim</th>
 									<th>Tanggal Pengiriman</th>
 									<th>Status</th>
 									<th>Action</th>
@@ -77,7 +77,7 @@
 											<td><?= esc($item['id_rak']); ?></td>
 											<td><?= esc($item['nama_gudang']); ?></td>
 											<td><?= esc($item['nama']); ?></td>
-											<td><?= esc($item['jumlah']); ?></td>
+											<td><?= esc($item['jumlah']) . ' dari ' . esc($item['total_stok']) . ' pcs'; ?></td>
 											<td><?= esc($item['tanggal_pengiriman']); ?></td>
 											<td><?= esc($item['status']); ?></td>
 											<?php if ($userRole['role'] == 'Gudang Pusat' || $userRole['role'] == 'Gudang Bagian') : ?>
