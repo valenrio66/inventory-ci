@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2024 at 09:49 PM
+-- Generation Time: Aug 26, 2024 at 08:21 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,7 +41,7 @@ CREATE TABLE `box` (
 --
 
 INSERT INTO `box` (`id_box`, `id_rak`, `tipe_box`, `kapasitas_tersedia`, `kapasitas_terpakai`, `created_at`) VALUES
-('21FM1', 21, 'Fast Moving', 56027, 750, '2024-08-03 11:13:03'),
+('21FM1', 21, 'Fast Moving', 38402, 18375, '2024-08-03 11:13:03'),
 ('21FM2', 21, 'Fast Moving', 56777, 0, '2024-08-03 11:19:44'),
 ('21MM1', 21, 'Medium Moving', 56777, 0, '2024-08-03 11:19:22'),
 ('21SM1', 21, 'Slow Moving', 56777, 0, '2024-08-03 11:19:33');
@@ -67,8 +67,10 @@ CREATE TABLE `gudang` (
 --
 
 INSERT INTO `gudang` (`id_gudang`, `nama_gudang`, `id_kepala`, `level`, `alamat`, `no_hp`, `kapasitas`) VALUES
-(2, 'Gudang Pusat', 6, 'Pusat', 'Gudang Pusat', '085269696969', 94050),
-(3, 'Gudang Bakauheni', 5, 'Bagian', 'Kabupaten Bakauheni', '08521345678', 119218);
+(2, 'Gudang Pusat', 6, 'Pusat', 'Gudang Pusat', '085269696969', 76425),
+(3, 'Gudang Bakauheni', 5, 'Bagian', 'Kabupaten Bakauheni', '08521345678', 119218),
+(5, 'Gudang Merak', 6, 'Pusat', 'Pelabuhan Merak', '085213921334', 5000),
+(8, 'Gudang Sarijadi', 6, 'Pusat', 'Sarijadi', '085213921334', 6000);
 
 -- --------------------------------------------------------
 
@@ -89,7 +91,13 @@ CREATE TABLE `pengiriman_barang` (
 --
 
 INSERT INTO `pengiriman_barang` (`id_pengiriman`, `id_produk`, `jumlah`, `tanggal_pengiriman`, `status`) VALUES
-(1, 'D6DL1621FM11', 4, '2024-08-03 00:00:00', 'Pending');
+(1, 'D6DL1621FM11', 4, '2024-08-03 00:00:00', 'Approved'),
+(2, 'D6DL1621FM11', 1, '2024-08-10 00:00:00', 'Approved'),
+(17, 'D6DL1621FM11', 5, '2024-08-20 00:00:00', 'Approved'),
+(18, 'D6DL1621FM11', 5, '2024-08-20 00:00:00', 'Pending'),
+(19, 'D6DL1621FM11', 5, '2024-08-26 22:44:00', 'Pending'),
+(20, 'KTEST121FM11', 5, '2024-08-26 23:30:00', 'Pending'),
+(21, 'BBR12321FM11', 10, '2024-08-27 00:01:00', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -107,6 +115,7 @@ CREATE TABLE `produk` (
   `serial_number` varchar(20) NOT NULL,
   `kode_material_sap` varchar(20) NOT NULL,
   `jumlah` int(10) NOT NULL,
+  `total_stok` int(10) NOT NULL,
   `satuan` enum('PC','SET','PAC','PAA','UN','PCS') NOT NULL,
   `harga_satuan` int(10) NOT NULL,
   `jumlah_harga` int(10) NOT NULL,
@@ -119,8 +128,11 @@ CREATE TABLE `produk` (
 -- Dumping data for table `produk`
 --
 
-INSERT INTO `produk` (`id_produk`, `nama_produk`, `id_box`, `klasifikasi_material`, `merk`, `jenis_tipe`, `serial_number`, `kode_material_sap`, `jumlah`, `satuan`, `harga_satuan`, `jumlah_harga`, `nomor_urut_gudang`, `dimensi_barang`, `created_at`) VALUES
-('D6DL1621FM11', 'Sparepart Mobil', '21FM1', 'Fast Moving', 'Daihatsu', '6DL16', 'E2024', '22024', 2, 'PC', 6000, 36000, 21, 750, '2024-08-03 19:23:03');
+INSERT INTO `produk` (`id_produk`, `nama_produk`, `id_box`, `klasifikasi_material`, `merk`, `jenis_tipe`, `serial_number`, `kode_material_sap`, `jumlah`, `total_stok`, `satuan`, `harga_satuan`, `jumlah_harga`, `nomor_urut_gudang`, `dimensi_barang`, `created_at`) VALUES
+('BBR12321FM11', 'Brake', '21FM1', 'Fast Moving', 'Brembo', 'BR123', 'BR123', 'BR123', 190, 200, 'PCS', 80000, 16000000, 21, 125, '2024-08-27 00:00:38'),
+('D6DL1621FM11', 'Sparepart Mobil', '21FM1', 'Fast Moving', 'Daihatsu', '6DL16', 'E2024', '22024', 35, 100, 'PC', 6000, 36000, 21, 750, '2024-08-03 19:23:03'),
+('KTEST121FM11', 'Shockbreaker', '21FM1', 'Fast Moving', 'KTC', 'TEST123', 'TEST123', 'TEST123', 95, 100, 'SET', 1000000, 100000000, 21, 125, '2024-08-26 23:05:10'),
+('MMPX1221FM11', 'Oli', '21FM1', 'Fast Moving', 'MPX', 'MPX123', 'MPX123', 'MPX123', 200, 200, 'PCS', 65000, 13000000, 21, 125, '2024-08-26 23:56:39');
 
 -- --------------------------------------------------------
 
@@ -142,7 +154,7 @@ CREATE TABLE `rak` (
 --
 
 INSERT INTO `rak` (`id`, `id_gudang`, `kapasitas_fast`, `kapasitas_medium`, `kapasitas_slow`, `created_at`) VALUES
-(21, 2, 737345, 738095, 738095, '2024-08-03 11:05:25'),
+(21, 2, 719720, 738095, 738095, '2024-08-03 11:05:25'),
 (22, 2, 681318, 681318, 681318, '2024-08-03 11:25:53');
 
 -- --------------------------------------------------------
@@ -182,7 +194,8 @@ INSERT INTO `user` (`id_user`, `username`, `password`, `nama`, `role`, `email`, 
 (4, 'adminadmin1', '$2y$10$DdjjuoBb9WNrbou1D9HpfetMO.LWE96RqFu0NBGpjbmQ8hiKXAeoi', 'Admin', 'Admin', 'admin@gmail.com', '085213921331'),
 (5, 'ejaeja1', '$2y$10$MAo529EzAVp0Ke9UTR2USuZK2UWXli7EiGS/FBxv2PwfMz0gTJdGa', 'Eja', 'Gudang Bagian', 'eja@gmail.com', '085213921333'),
 (6, 'rezareza1', '$2y$10$6Hd4CEGE66PKXKtdZr/tjezvHRjp43nJn/Q4pBIInooCFEndA1Cii', 'Reza', 'Gudang Pusat', 'reza@gmail.com', '085213921334'),
-(7, 'supersuper1', '$2y$10$hUc3lKYIACwf8BwABO52teFRqMqQ9OXNsobfCT36ciAFqVanowuPu', 'Super Admin', 'Super Admin', 'superadmin@gmail.com', '08987654212');
+(7, 'supersuper1', '$2y$10$hUc3lKYIACwf8BwABO52teFRqMqQ9OXNsobfCT36ciAFqVanowuPu', 'Super Admin', 'Super Admin', 'superadmin@gmail.com', '08987654212'),
+(9, 'marsel', '$2y$10$iGdjTxpgyDye434ETTWeY.RxCTlaeG4DrIOTC5ZExCSmpFkbLX2iO', 'Marsellino', 'Gudang Pusat', 'marsel@gmail.com', '08965773847647');
 
 --
 -- Indexes for dumped tables
@@ -242,19 +255,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `gudang`
 --
 ALTER TABLE `gudang`
-  MODIFY `id_gudang` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_gudang` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `pengiriman_barang`
 --
 ALTER TABLE `pengiriman_barang`
-  MODIFY `id_pengiriman` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_pengiriman` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
