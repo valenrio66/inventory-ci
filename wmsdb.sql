@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 26, 2024 at 08:21 PM
+-- Generation Time: Aug 27, 2024 at 07:17 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -83,6 +83,7 @@ CREATE TABLE `pengiriman_barang` (
   `id_produk` varchar(20) NOT NULL,
   `jumlah` int(10) NOT NULL,
   `tanggal_pengiriman` datetime NOT NULL,
+  `tracking` enum('Barang Keluar dari Gudang','Barang Sedang dalam Perjalanan','Barang Sampai di Gudang') NOT NULL,
   `status` enum('Pending','Approved','Rejected') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -90,14 +91,11 @@ CREATE TABLE `pengiriman_barang` (
 -- Dumping data for table `pengiriman_barang`
 --
 
-INSERT INTO `pengiriman_barang` (`id_pengiriman`, `id_produk`, `jumlah`, `tanggal_pengiriman`, `status`) VALUES
-(1, 'D6DL1621FM11', 4, '2024-08-03 00:00:00', 'Approved'),
-(2, 'D6DL1621FM11', 1, '2024-08-10 00:00:00', 'Approved'),
-(17, 'D6DL1621FM11', 5, '2024-08-20 00:00:00', 'Approved'),
-(18, 'D6DL1621FM11', 5, '2024-08-20 00:00:00', 'Pending'),
-(19, 'D6DL1621FM11', 5, '2024-08-26 22:44:00', 'Pending'),
-(20, 'KTEST121FM11', 5, '2024-08-26 23:30:00', 'Pending'),
-(21, 'BBR12321FM11', 10, '2024-08-27 00:01:00', 'Pending');
+INSERT INTO `pengiriman_barang` (`id_pengiriman`, `id_produk`, `jumlah`, `tanggal_pengiriman`, `tracking`, `status`) VALUES
+(18, 'D6DL1621FM11', 5, '2024-08-20 00:00:00', 'Barang Sampai di Gudang', 'Pending'),
+(19, 'D6DL1621FM11', 5, '2024-08-26 22:44:00', 'Barang Keluar dari Gudang', 'Pending'),
+(20, 'KTEST121FM11', 5, '2024-08-26 23:30:00', 'Barang Keluar dari Gudang', 'Pending'),
+(21, 'BBR12321FM11', 10, '2024-08-27 00:01:00', 'Barang Keluar dari Gudang', 'Pending');
 
 -- --------------------------------------------------------
 
