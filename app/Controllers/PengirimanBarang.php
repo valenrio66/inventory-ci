@@ -140,6 +140,7 @@ class PengirimanBarang extends BaseController
 			'id_produk' => $id_produk,
 			'jumlah' => $jumlahPengiriman,
 			'tanggal_pengiriman' => $requestData['tanggal_pengiriman'],
+			'tracking' => 'Barang Keluar dari Gudang',
 			'status' => 'Pending'
 		];
 
@@ -168,22 +169,27 @@ class PengirimanBarang extends BaseController
 		$dompdf->stream("surat_pengiriman_barang_" . $id_pengiriman . ".pdf", array("Attachment" => true));
 	}
 
-	public function edit($id = null)
+	public function edit($id)
 	{
-		$model = new PengirimanBarangModel();
-		$data['pengiriman'] = $model->getById($id);
+		$pengirimanModel = new PengirimanBarangModel();
+		$data = $this->request->getPost();
 
-		if ($this->request->getMethod() == 'post') {
-			$data = $this->request->getPost();
-
-			if ($model->updatePengiriman($id, $data)) {
-				return redirect()->to('/dashboard/pengirimanbarang')->with('success', 'Pengiriman updated successfully');
-			} else {
-				return redirect()->to('/dashboard/pengirimanbarang/edit/' . $id)->with('error', 'Failed to update pengiriman');
-			}
+		if ($pengirimanModel->updatePengiriman($id, $data)) {
+			return redirect()->to('/dashboard/pengirimanbarang')->with('message', 'Box berhasil diupdate');
+		} else {
+			return redirect()->to('/dashboard/pengirimanbarang/edit/' . $id)->with('error', 'Failed to update pengiriman');
 		}
+	}
 
-		return view('pengiriman_edit_view', $data);
+	// Render Page Update Pengiriman
+	public function renderPageUpdatePengiriman($id)
+	{
+		$pengirimanModel = new PengirimanBarangModel();
+		$data['pengirimans'] = $pengirimanModel->getById($id);
+
+		$data['tracking'] = $pengirimanModel->getKlasifikasiTrackingValues();
+
+		return view('pengiriman/pengiriman_edit_view', $data);
 	}
 
 	public function delete($id = null)

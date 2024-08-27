@@ -12,6 +12,7 @@ class PengirimanBarangModel extends Model
 		'id_produk',
 		'jumlah',
 		'tanggal_pengiriman',
+		'tracking',
 		'status'
 	];
 
@@ -43,7 +44,13 @@ class PengirimanBarangModel extends Model
 
 	public function getById($id_pengiriman)
 	{
-		return $this->find($id_pengiriman);
+		return $this->select('pengiriman_barang.*, produk.nama_produk, produk.total_stok, gudang.nama_gudang, box.id_box, rak.id AS id_rak, gudang.id_gudang, gudang.id_kepala, user.id_user, user.nama')
+		->join('produk', 'pengiriman_barang.id_produk = produk.id_produk')
+		->join('box', 'produk.id_box = box.id_box') // Pastikan relasi ini benar
+		->join('rak', 'box.id_rak = rak.id') // Pastikan relasi ini benar
+		->join('gudang', 'rak.id_gudang = gudang.id_gudang')
+		->join('user', 'gudang.id_kepala = user.id_user') // Pastikan relasi ini benar
+		->find($id_pengiriman);
 	}
 
 	public function getShipmentWithProduct($id_pengiriman)
@@ -123,6 +130,21 @@ class PengirimanBarangModel extends Model
 		log_message('info', "Transaksi pengiriman berhasil dan status diupdate ke 'Approved'.");
 		return true;
 	}
+
+	// Untuk Get Opsi Tracking
+    public function getKlasifikasiTrackingValues()
+    {
+        $query = $this->db->query("SHOW COLUMNS FROM pengiriman_barang WHERE Field = 'tracking'");
+        $row = $query->getRow();
+        if ($row === null) {
+            return [];
+        }
+
+        $regex = "/^enum\((.*)\)$/";
+        preg_match($regex, $row->Type, $matches);
+        $enum = str_replace("'", "", $matches[1]);
+        return explode(",", $enum);
+    }
 
 	public function updatePengiriman($id_pengiriman, $data)
 	{

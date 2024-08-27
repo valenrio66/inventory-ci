@@ -64,6 +64,7 @@
 									<th>Kepala Gudang</th>
 									<th>Jumlah Barang yang Dikirim</th>
 									<th>Tanggal Pengiriman</th>
+									<th>Tracking</th>
 									<th>Status</th>
 									<th>Action</th>
 								</tr>
@@ -83,22 +84,23 @@
 											<td><?= esc($item['nama']); ?></td>
 											<td><?= esc($item['jumlah']) . ' dari ' . esc($item['total_stok']) . ' pcs'; ?></td>
 											<td><?= esc($item['tanggal_pengiriman']); ?></td>
+											<td><?= esc($item['tracking']); ?></td>
 											<td><?= esc($item['status']); ?></td>
 											<?php if ($userRole['role'] == 'Gudang Pusat' || $userRole['role'] == 'Gudang Bagian') : ?>
 												<td>
-													<?php if ($item['status'] == 'Pending') : ?>
+													<?php if ($item['status'] == 'Pending' && $item['tracking'] == 'Barang Sampai di Gudang') : ?>
 														<form id="approveKirim" action="<?= site_url('/dashboard/pengirimanbarang/approve/' . $item['id_pengiriman']); ?>" method="post" style="display:inline-block;">
 															<input type="hidden" name="id_pengiriman" value="<?= esc($current_user_id); ?>">
 															<button type="submit" class="btn btn-success btn-sm">Approve</button>
 														</form>
 														<a href="<?= base_url('/dashboard/pengirimanbarang/download/' . $item['id_pengiriman']); ?>" class="btn btn-primary">Download Surat</a>
-													<?php elseif ($item['status'] == 'Approved') : ?>
+													<?php elseif ($item['status'] == 'Approved' && $item['tracking'] == 'Barang Keluar dari Gudang' || 'Barang Sedang dalam Perjalanan') : ?>
 														<span class="text-muted">No Action Required</span>
 													<?php endif; ?>
 												</td>
 											<?php elseif ($userRole['role'] == "Admin" || $userRole['role'] == "Super Admin") : ?>
 												<td>
-													<a href="<?= site_url('pengirimanbarang/edit/' . $item['id_pengiriman']); ?>" class="btn btn-warning btn-sm">Edit</a>
+													<a href="<?= site_url('/dashboard/pengirimanbarang/edit/' . $item['id_pengiriman']); ?>" class="btn btn-info btn-sm">Tracking</a>
 													<a href="<?= site_url('pengirimanbarang/delete/' . $item['id_pengiriman']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
 												</td>
 											<?php endif; ?>

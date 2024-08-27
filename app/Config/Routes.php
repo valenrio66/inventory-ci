@@ -66,7 +66,8 @@ $routes->match(['get', 'post'], '/dashboard/pengirimanbarang/add', 'PengirimanBa
 $routes->match(['get', 'post'],'/dashboard/pengirimanbarang/suratpengiriman', 'PengirimanBarang::suratPengiriman', ['filter' => 'auth']);
 $routes->post('/dashboard/pengirimanbarang/submitpengiriman', 'PengirimanBarang::submitPengiriman', ['filter' => 'auth']);
 $routes->post('dashboard/pengirimanbarang/approve/(:segment)', 'PengirimanBarang::approve/$1', ['filter' => 'auth']);
-$routes->get('/dashboard/pengirimanbarang/edit/(:segment)', 'PengirimanBarang::edit/$1', ['filter' => 'auth']);
-$routes->post('/dashboard/pengirimanbarang/edit/(:segment)', 'PengirimanBarang::edit/$1', ['filter' => 'auth']);
+
+$routes->get('/dashboard/pengirimanbarang/edit/(:segment)', 'PengirimanBarang::renderPageUpdatePengiriman/$1', ['filter' => 'auth']);
+$routes->post('/pengirimanbarang/edit/(:segment)', 'PengirimanBarang::edit/$1', ['filter' => 'auth']);
 $routes->get('/dashboard/pengirimanbarang/delete/(:segment)', 'PengirimanBarang::delete/$1', ['filter' => 'auth']);
 $routes->get('/dashboard/pengirimanbarang/download/(:segment)', 'PengirimanBarang::downloadPdf/$1', ['as' => 'download_surat'], ['filter' => 'auth']);
