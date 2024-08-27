@@ -101,7 +101,7 @@
 											<?php elseif ($userRole['role'] == "Admin" || $userRole['role'] == "Super Admin") : ?>
 												<td>
 													<a href="<?= site_url('/dashboard/pengirimanbarang/edit/' . $item['id_pengiriman']); ?>" class="btn btn-info btn-sm">Tracking</a>
-													<a href="<?= site_url('pengirimanbarang/delete/' . $item['id_pengiriman']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
+													<a href="<?= site_url('/pengirimanbarang/delete/' . $item['id_pengiriman']); ?>" class="btn btn-danger btn-sm" onclick="return confirmDelete(event)">Delete</a>
 												</td>
 											<?php endif; ?>
 										</tr>
@@ -138,6 +138,7 @@
 
 <?= $this->include('content/footer') ?>
 <script src="<?= base_url('js/pengirimanbarang/approve.js') ?>"></script>
+<script src="<?= base_url('js/pengirimanbarang/delete.js') ?>"></script>
 <script>
 	function searchPengiriman() {
 		var input, filter, table, tr, td, i, j, txtValue;
