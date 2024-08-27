@@ -94,6 +94,8 @@
 															<button type="submit" class="btn btn-success btn-sm">Approve</button>
 														</form>
 														<a href="<?= base_url('/dashboard/pengirimanbarang/download/' . $item['id_pengiriman']); ?>" class="btn btn-primary">Download Surat</a>
+													<?php elseif ($item['status'] == 'Approved' && $item['tracking'] == 'Barang Sampai di Gudang') : ?>
+														<a href="<?= base_url('/dashboard/pengirimanbarang/download/' . $item['id_pengiriman']); ?>" class="btn btn-primary">Download Surat</a>
 													<?php elseif ($item['status'] == 'Approved' && $item['tracking'] == 'Barang Keluar dari Gudang' || 'Barang Sedang dalam Perjalanan') : ?>
 														<span class="text-muted">No Action Required</span>
 													<?php endif; ?>
